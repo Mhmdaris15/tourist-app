@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Hostelry extends Model
 {
     use HasFactory;
+
+    protected $guarded = [
+        'id'
+    ];
 }

@@ -18,6 +18,7 @@ class NewsCategoryFactory extends Factory
     {
         return [
             //
+            'news_category_name' => $this->faker->name(),
         ];
     }
 }

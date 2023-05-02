@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('news_title', 255);
             $table->text('news_content');
-            $table->dateTime('news_date');
+            $table->date('news_date');
             $table->foreignId('news_category_id')->constrained('news_categories');
             $table->string('news_image', 255);
             $table->timestamps();

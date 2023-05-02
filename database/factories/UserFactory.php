@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Nette\Utils\Random;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -17,10 +18,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->name();
+        // $email = strtolower(str_replace(' ', '.', $name)) . '@gmail.com';
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'role' => $this->faker->randomElement(['admin', 'user', 'treasurer', 'customer', 'owner']),
             'password' => '2wsx1qaz', // password
             'remember_token' => Str::random(10),
         ];

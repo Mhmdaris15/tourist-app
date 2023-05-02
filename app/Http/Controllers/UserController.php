@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -17,6 +19,7 @@ class UserController extends Controller
         $users = User::all();
         return Inertia::render('Dashboard', [
             'users' => $users,
+            'page' => 'user'
         ]);
     }
 
@@ -36,6 +39,19 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'role' => 'required|string'
+        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->role = $request->role;
+        $user->save();
+        return redirect()->route('dashboard.user')->with('success', 'User created successfully');
     }
 
     /**
@@ -60,13 +76,32 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         //
+        $request->validate([
+            'id' => 'required|integer',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'role' => 'required|string'
+        ]);
+        $id = $request->id;
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->save();
+        return redirect()->route('dashboard.user')->with('success', 'User updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user) : RedirectResponse
     {
-        //
+        $id = $request->id;
+
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->route('dashboard.user')->with('success', 'User deleted successfully');
     }
 }

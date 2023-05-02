@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -50,5 +51,10 @@ class User extends Authenticatable
         static::creating(function ($user) {
             $user->password = Hash::make($user->password);
         });
+    }
+
+    public function customer(): HasMany
+    {
+        return $this->hasMany(Customer::class);
     }
 }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('customer_name', 255);
             $table->string('phone_number', 255);
             $table->text('address');
-            $table->string('photo');
-            $table->foreignId('id_user')->constrained('users');
+            $table->string('photo')->nullable();
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
