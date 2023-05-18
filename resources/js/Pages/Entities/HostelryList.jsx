@@ -32,11 +32,11 @@ const SingleHostelry = (props) => {
         hostelry_title: props.hostelry_title,
         hostelry_description: props.hostelry_description,
         facilities: props.facilities,
-        image_1: null,
-        image_2: null,
-        image_3: null,
-        image_4: null,
-        image_5: null,
+        image_1: "Default Image",
+        image_2: "Default Image",
+        image_3: "Default Image",
+        image_4: "Default Image",
+        image_5: "Default Image",
     });
 
     useEffect(() => {
@@ -261,11 +261,11 @@ const HostelryList = (props) => {
             hostelry_title: "",
             hostelry_description: "",
             facilities: "",
-            image_1: null,
-            image_2: null,
-            image_3: null,
-            image_4: null,
-            image_5: null,
+            image_1: "Default Image",
+            image_2: "Default Image",
+            image_3: "Default Image",
+            image_4: "Default Image",
+            image_5: "Default Image",
         });
 
     const images = [

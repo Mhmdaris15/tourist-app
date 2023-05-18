@@ -17,7 +17,6 @@ const SingleTravel = (props) => {
     const [confirmingTravelUpdate, setConfirmingTravelUpdate] = useState(false);
 
     let { categories } = useContext(DashboardContext);
-    console.log("Props", props);
 
     categories = categories.map((category) => {
         return {
@@ -80,7 +79,6 @@ const SingleTravel = (props) => {
     };
 
     const deleteTravel = (e) => {
-        // console.log("deleteTravel");
         e.preventDefault();
 
         destroy(
@@ -95,7 +93,6 @@ const SingleTravel = (props) => {
 
     const updateTravel = (e) => {
         e.preventDefault();
-        console.log("Update Tourist Attraction :", data);
         post(route("dashboard.tourist-attraction.update", { id: props.id }), {
             forceFormData: true, // force form data to be sent as multipart/form-data
             preserveScroll: true, // preserve scroll position on page
@@ -416,7 +413,6 @@ const TravelList = (props) => {
 
     const addTravel = (e) => {
         e.preventDefault();
-        console.log("Add Travel Data : ", data);
         post(route("dashboard.tourist-attraction.store"), {
             forceFormData: true,
             preserveScroll: true, // preserve scroll position on page

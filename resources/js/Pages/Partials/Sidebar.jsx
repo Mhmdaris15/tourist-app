@@ -33,7 +33,7 @@ const Sidebar = () => {
                         size={page === "news-category" ? 70 : 40}
                     />
                 </Link>
-                <Link href={route("dashboard.user")}>
+                <Link href={route("dashboard.employee.index")}>
                     <MD.MdPeople
                         className={
                             "text-vintage-50 ease-out transition-all delay-100 " +
@@ -55,7 +55,7 @@ const Sidebar = () => {
                         size={page === "customer" ? 70 : 40}
                     />
                 </Link>
-                <Link href={route("dashboard.user")}>
+                <Link href={route("dashboard.travel-package.index")}>
                     <MD.MdBeachAccess
                         className={
                             "text-vintage-50 ease-out transition-all delay-100 " +
@@ -63,7 +63,7 @@ const Sidebar = () => {
                                 ? " bg-vintage-100 hover:text-vintage-200 p-3 rounded-full"
                                 : "hover:text-vintage-100")
                         }
-                        size={page === "destination" ? 70 : 40}
+                        size={page === "travel-package" ? 70 : 40}
                     />
                 </Link>
                 <Link href={route("dashboard.hostelry.index")}>
@@ -108,6 +108,17 @@ const Sidebar = () => {
                                 : "hover:text-vintage-100")
                         }
                         size={page === "travel" ? 70 : 40}
+                    />
+                </Link>
+                <Link href={route("dashboard.reservation.index")}>
+                    <MD.MdHomeRepairService
+                        className={
+                            "text-vintage-50 ease-out transition-all delay-100 " +
+                            (page === "reservation"
+                                ? " bg-vintage-100 hover:text-vintage-200 p-3 rounded-full"
+                                : "hover:text-vintage-100")
+                        }
+                        size={page === "reservation" ? 70 : 40}
                     />
                 </Link>
             </div>

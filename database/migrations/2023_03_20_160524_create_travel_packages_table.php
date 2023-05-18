@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('package_name', 255);
             $table->text('description');
-            $table->string('facilities', 255);
+            $table->text('facilities');
             $table->integer('price');
             $table->decimal('discount', $precision = 10, $scale = 0);
             $table->string('image_1', 255);

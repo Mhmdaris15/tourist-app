@@ -9,6 +9,9 @@ import Toast from "@/Components/Toast";
 import TravelList from "./Entities/TravelList";
 import HostelryList from "./Entities/HostelryList";
 import CustomerList from "./Entities/CustomerList";
+import TravelPackageList from "./Entities/TravelPackageList";
+import EmployeeList from "./Entities/EmployeeList";
+import ReservationList from "./Entities/ReservationList";
 
 export const DashboardContext = createContext();
 
@@ -53,6 +56,15 @@ const Dashboard = (props) => {
             break;
         case "customer":
             loadedComponent = <CustomerList />;
+            break;
+        case "travel-package":
+            loadedComponent = <TravelPackageList />;
+            break;
+        case "employee":
+            loadedComponent = <EmployeeList />;
+            break;
+        case "reservation":
+            loadedComponent = <ReservationList />;
             break;
     }
 

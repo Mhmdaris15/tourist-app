@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HostelryController;
 use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TravelCategoryController;
 use App\Http\Controllers\TravelController;
+use App\Http\Controllers\TravelPackageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -81,6 +84,27 @@ Route::resource('/dashboard/customer', CustomerController::class)->middleware(['
     'destroy' => 'dashboard.customer.destroy',
 ]));
 
+Route::resource('/dashboard/travel-package', TravelPackageController::class)->middleware(['auth', 'verified'])->names(([
+    'index' => 'dashboard.travel-package.index',
+    'store' => 'dashboard.travel-package.store',
+    'update' => 'dashboard.travel-package.update',
+    'destroy' => 'dashboard.travel-package.destroy',
+]));
+
+Route::resource('/dashboard/employee', EmployeeController::class)->middleware(['auth', 'verified'])->names(([
+    'index' => 'dashboard.employee.index',
+    'store' => 'dashboard.employee.store',
+    'update' => 'dashboard.employee.update',
+    'destroy' => 'dashboard.employee.destroy',
+]));
+
+Route::resource('/dashboard/reservation', ReservationController::class)->middleware(['auth', 'verified'])->names(([
+    'index' => 'dashboard.reservation.index',
+    'store' => 'dashboard.reservation.store',
+    'update' => 'dashboard.reservation.update',
+    'destroy' => 'dashboard.reservation.destroy',
+]));
+
 Route::post('/dashboard/news/{id}', [NewsController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.news.update');
 Route::post('/dashboard/tourist-attraction/{id}', [TravelController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.tourist-attraction.update');
 Route::post('/dashboard/hostelry/{id}', [HostelryController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.hostelry.update');
@@ -88,6 +112,9 @@ Route::post('/dashboard/customer/{id}', [CustomerController::class, 'update'])->
 Route::post('/dashboard/user/{id}', [UserController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.user.update');
 Route::post('/dashboard/news-category/{id}', [NewsCategoryController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.news-category.update');
 Route::post('/dashboard/travel-category/{id}', [TravelCategoryController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.travel-category.update');
+Route::post('/dashboard/travel-package/{id}', [TravelPackageController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.travel-package.update');
+Route::post('/dashboard/employee/{id}', [EmployeeController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.employee.update');
+Route::post('/dashboard/reservation/{id}', [ReservationController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.reservation.update');
 
 Route::redirect('/dashboard', '/dashboard/user', 301)->middleware(['auth', 'verified'])->name('dashboard');
 

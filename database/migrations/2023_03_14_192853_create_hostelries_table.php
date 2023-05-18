@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('hostelry_title', 255);
             $table->text('hostelry_description');
-            $table->text('facilites');
+            $table->text('facilities')->default('');
             $table->string('image_1', 255);
             $table->string('image_2', 255);
             $table->string('image_3', 255);

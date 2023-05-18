@@ -17,9 +17,9 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone', 15);
             $table->enum('position', ['administrator', 'treasurer', 'owner']);
-            $table->foreignId('id_user')->constrained('users');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
