@@ -1,76 +1,72 @@
 import React from "react";
-import LandingImage from "../../../images/tetiana-zatsarynna-zppTyTx3da4-unsplash.jpg";
+import LandingImage from "../../../images/cappadocia-view.jpg";
 import { Navbar, Dropdown, Avatar } from "flowbite-react";
-const Header = () => {
+import { Link, Head } from "@inertiajs/react";
+import NevtikLogo from "../../../images/logo-nevtik.png";
+import Cappodacia from "../../../images/cappadocia-view.jpg";
+import * as Bs from "react-icons/bs";
+
+const Header = (props) => {
     // const imageUrl = "/public/images/1680686202.anies-baswedan.jpeg";
 
     return (
-        <div
-            className={`h-screen w-screen bg-cover bg-center bg-no-repeat `}
-            style={{
-                backgroundImage: `url(${LandingImage})`,
-            }}
-        >
-            <Navbar
-                fluid={true}
-                rounded={true}
-                style={
-                    {
-                        // backgroundColor: "transparent",
-                        // display: "flex",
-                        // justifyContent: "space-evenly",
-                        // alignItems: "center",
-                        // width: "100%",
-                    }
-                }
-                className="grid grid-flow-row grid-cols-3 w-full items-center bg-[#000000] bg-opacity-10"
-            >
-                <Navbar.Brand href="https://flowbite.com/">
-                    <img
-                        src="https://flowbite.com/docs/images/logo.svg"
-                        className="mr-3 h-6 sm:h-9"
-                        alt="Flowbite Logo"
-                    />
-                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                        Flowbite
-                    </span>
-                </Navbar.Brand>
-                <div className="flex md:order-2">
-                    <Dropdown
-                        arrowIcon={false}
-                        inline={true}
-                        label={
-                            <Avatar
-                                alt="User settings"
-                                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                rounded={true}
-                            />
-                        }
-                    >
-                        <Dropdown.Header>
-                            <span className="block text-sm">Bonnie Green</span>
-                            <span className="block truncate text-sm font-medium">
-                                name@flowbite.com
-                            </span>
-                        </Dropdown.Header>
-                        <Dropdown.Item>Dashboard</Dropdown.Item>
-                        <Dropdown.Item>Settings</Dropdown.Item>
-                        <Dropdown.Item>Earnings</Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item>Sign out</Dropdown.Item>
-                    </Dropdown>
-                    <Navbar.Toggle />
-                </div>
-                <Navbar.Collapse>
-                    <Navbar.Link href="/navbars" active={true}>
+        <div>
+            <div className="w-full flex items-center justify-around bg-white">
+                <span className="flex items-center font-extrabold text-3xl font-mono">
+                    <img src={NevtikLogo} alt="" width={100} />
+                    <p>NEVTIK TOURIST</p>
+                </span>
+                <nav className="flex justify-center gap-x-5">
+                    <Link href="/home" className="text-green-400 text-xl">
                         Home
-                    </Navbar.Link>
-                    <Navbar.Link href="/navbars">About</Navbar.Link>
-                    <Navbar.Link href="/navbars">Services</Navbar.Link>
-                    <Navbar.Link href="/navbars">Pricing</Navbar.Link>
-                    <Navbar.Link href="/navbars">Contact</Navbar.Link>
-                </Navbar.Collapse>
-            </Navbar>
+                    </Link>
+                    <Link
+                        href="/booking"
+                        className="text-xl hover:text-green-400"
+                    >
+                        Booking
+                    </Link>
+                    <Link
+                        href="/service"
+                        className="text-xl hover:text-green-400"
+                    >
+                        Service
+                    </Link>
+                    <Link
+                        href="/contact"
+                        className="text-xl hover:text-green-400"
+                    >
+                        Contact
+                    </Link>
+                </nav>
+            </div>
+            <div
+                className="bg-cover bg-center h-fit md:px-32 pt-32"
+                style={{
+                    backgroundImage: `url(${Cappodacia})`,
+                }}
+            >
+                <div className="absolute inset-x-0 md:left-32 z-0 w-64 h-64 mx-auto md:mx-0 rounded-full shadow-2xl bg-black bg-opacity-50 blur-xl shadow-gray-900"></div>
+                <h1 className="relative md:text-6xl text-4xl mx-auto md:mx-0 text-center md:text-left z-10 font-extrabold block w-fit text-gray-50">
+                    Discover Your Life <br />
+                    It's A Big World <br />
+                    Out There
+                </h1>
+                <div className="relative bg-gray-600 z-10 w-fit py-5 px-7 mt-5 mx-auto md:mx-0 rounded-full text-gray-100 hover:bg-gray-200 hover:text-gray-700 transition-all ease-in-out">
+                    Explore <Bs.BsArrowRight className="inline text-2xl ml-2" />
+                </div>
+                <div className="bg-gray-50 translate-y-16 lg:w-2/5  grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
+                    <div className="lg:px-10 py-4 bg-green-400 text-gray-50 hover:bg-gray-50 hover:text-gray-400 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                        Nature
+                    </div>
+                    <div className="lg:px-10 py-4 hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                        Art
+                    </div>
+                    <div className="lg:px-10 py-4 hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                        City
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
