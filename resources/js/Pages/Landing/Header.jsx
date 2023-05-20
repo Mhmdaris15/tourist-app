@@ -56,13 +56,13 @@ const Header = (props) => {
                     Explore <Bs.BsArrowRight className="inline text-2xl ml-2" />
                 </div>
                 <div className="bg-gray-50 translate-y-16 lg:w-2/5  grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
-                    <div className="lg:px-10 py-4 bg-green-400 text-gray-50 hover:bg-gray-50 hover:text-gray-400 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div className="lg:px-10 py-4 cursor-pointer bg-green-400 text-gray-50 hover:bg-gray-50 hover:text-gray-400 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
                         Nature
                     </div>
-                    <div className="lg:px-10 py-4 hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div className="lg:px-10 py-4 cursor-pointer hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
                         Art
                     </div>
-                    <div className="lg:px-10 py-4 hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div className="lg:px-10 py-4 cursor-pointer hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
                         City
                     </div>
                 </div>
