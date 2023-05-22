@@ -6,17 +6,19 @@ import NevtikLogo from "../../../images/logo-nevtik.png";
 import Cappodacia from "../../../images/cappadocia-view.jpg";
 import * as Bs from "react-icons/bs";
 
-const Header = (props) => {
-    // const imageUrl = "/public/images/1680686202.anies-baswedan.jpeg";
+const Header = ({ auth, onChange, titleDestination }) => {
+    const { user } = auth ?? {};
 
     return (
         <div>
             <div className="w-full flex items-center justify-around bg-white">
-                <span className="flex items-center font-extrabold text-3xl font-mono">
-                    <img src={NevtikLogo} alt="" width={100} />
-                    <p>NEVTIK TOURIST</p>
-                </span>
-                <nav className="flex justify-center gap-x-5">
+                <Link href="/">
+                    <span className="flex items-center font-extrabold text-3xl font-mono">
+                        <img src={NevtikLogo} alt="" width={100} />
+                        <p>NEVTIK TOURIST</p>
+                    </span>
+                </Link>
+                <nav className="flex justify-center items-center gap-x-5">
                     <Link href="/home" className="text-green-400 text-xl">
                         Home
                     </Link>
@@ -38,6 +40,30 @@ const Header = (props) => {
                     >
                         Contact
                     </Link>
+                    <Link
+                        href="/register"
+                        className={`text-xl ml-5 py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
+                            user ? "hidden" : ""
+                        }`}
+                    >
+                        Register
+                    </Link>
+                    <Link
+                        href="/login"
+                        className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
+                            user ? "hidden" : ""
+                        }`}
+                    >
+                        Login
+                    </Link>
+                    <Link
+                        href="/dashboard"
+                        className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
+                            user ? "" : "hidden"
+                        }`}
+                    >
+                        Dashboard
+                    </Link>
                 </nav>
             </div>
             <div
@@ -56,13 +82,37 @@ const Header = (props) => {
                     Explore <Bs.BsArrowRight className="inline text-2xl ml-2" />
                 </div>
                 <div className="bg-gray-50 translate-y-16 lg:w-2/5  grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
-                    <div className="lg:px-10 py-4 cursor-pointer bg-green-400 text-gray-50 hover:bg-gray-50 hover:text-gray-400 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div
+                        onClick={onChange}
+                        id="1"
+                        className={`lg:px-10 py-4 cursor-pointer font-bold transition-all ease-in-out text-center text-xl rounded-lg ${
+                            titleDestination == "Nature"
+                                ? "bg-green-400 text-gray-50 hover:bg-green-400 hover:text-gray-50"
+                                : "hover:bg-green-400 hover:text-gray-50"
+                        }`}
+                    >
                         Nature
                     </div>
-                    <div className="lg:px-10 py-4 cursor-pointer hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div
+                        onClick={onChange}
+                        id="2"
+                        className={`lg:px-10 py-4 cursor-pointer font-bold transition-all ease-in-out text-center text-xl rounded-lg ${
+                            titleDestination == "Art"
+                                ? "bg-green-400 text-gray-50 hover:bg-green-400 hover:text-gray-50"
+                                : "hover:bg-green-400 hover:text-gray-50"
+                        }`}
+                    >
                         Art
                     </div>
-                    <div className="lg:px-10 py-4 cursor-pointer hover:bg-green-400 hover:text-gray-50 font-bold transition-all ease-in-out text-center text-xl rounded-lg">
+                    <div
+                        onClick={onChange}
+                        id="3"
+                        className={`lg:px-10 py-4 cursor-pointer font-bold transition-all ease-in-out text-center text-xl rounded-lg ${
+                            titleDestination == "City"
+                                ? "bg-green-400 text-gray-50 hover:bg-green-400 hover:text-gray-50"
+                                : "hover:bg-green-400 hover:text-gray-50"
+                        }`}
+                    >
                         City
                     </div>
                 </div>

@@ -37,6 +37,9 @@ export default function Welcome(props) {
                 "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe. Several walls were being built from as early as the 7th century BC by ancient Chinese states; selective stretches were later joined together by Qin Shi Huang (220–206 BC), the first Emperor of China. Little of the Qin wall remains.",
             rating: 3.5,
         },
+    ];
+
+    const artDestinations = [
         {
             name: "The Bund",
             location: "Shanghai, China",
@@ -44,17 +47,47 @@ export default function Welcome(props) {
                 "The Bund or Waitan is a waterfront area in central Shanghai. The area centers on a section of Zhongshan Road within the former Shanghai International Settlement, which runs along the western bank of the Huangpu River in the eastern part of Huangpu District. The area along the river faces the modern skyscrapers of Lujiazui in the Pudong District. The Bund usually refers to the buildings and wharves on this section of the road, as well as some adjacent areas. It is one of the most famous tourist destinations in Shanghai. Building heights are restricted in this area.",
             rating: 2.5,
         },
+        {
+            name: "Little Petra",
+            location: "Ma'an Governorate, Jordan",
+            description: `Little Petra, also known as Siq al-Barid, is an archaeological site located north of Petra and the town of Wadi Musa in the Ma'an Governorate of Jordan. Like Petra, it is a Nabataean site, with buildings carved into the walls of the sandstone canyons. As its name suggests, it is much smaller, consisting of three wider open areas connected by a 450-metre (1,480 ft) canyon. It is part of the Petra Archeological Park, though accessed separately from the main site. It is often visited by tourists in conjunction with Petra itself, since it is free and usually less crowded.`,
+            rating: 4,
+        },
+        {
+            name: "Castello",
+            location: "Venice, Italy",
+            description: `The Castello district of Venice, Italy is the largest of the six sestieri of Venice, Italy. The district grew up from the thirteenth century around a naval dockyard on what was originally the Isole Gemini, although there had been small settlements of the islands of San Pietro di Castello (for which the sestiere is named), also called Isola d'Olivolo, since at least the eighth century. The district became divided between the Arsenale, then the largest naval complex in Europe, and the monasteries in the north of the quarter. It was later altered by Napoleon, who planned what are now the Bienniale Gardens, and still more recently the island of Sant'Elena has been created, and land drained at other extremities of the quarter. Other attractions in Castello include the Scuola di San Marco, the Church of Santi Giovanni e Paolo, the Scuola of San Giorgio degli Schiavoni, the church of San Giorgio dei Greci, the Campo Santa Maria Formosa, the Church of La Pietà and the Church of San Zaccaria.`,
+            rating: 4.5,
+        },
+    ];
+    const cityDestinations = [
+        {
+            name: "Brandenburg Gate",
+            location: "Berlin, Germany",
+            description: `The Brandenburg Gate is an 18th-century neoclassical monument in Berlin, built on the orders of Prussian king Frederick William II after the successful restoration of order during the early Batavian Revolution. One of the best-known landmarks of Germany, it was built on the site of a former city gate that marked the start of the road from Berlin to the town of Brandenburg an der Havel, which used to be capital of the Margraviate of Brandenburg.`,
+            rating: 4.5,
+        },
+        {
+            name: "Eiffel Tower",
+            location: "Paris, France",
+            description:
+                "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It is named after the engineer Gustave Eiffel, whose company designed and built the tower.",
+            rating: 5,
+        },
+        {
+            name: "Jungfraujoch",
+            location: "Bernese Alps, Switzerland",
+            description:
+                "Jungfraujoch is a glacier saddle connecting the two four-thousander peaks Jungfrau and Mönch, at an elevation of 3,466 metres above sea level. It is a glacier pass, on the upper snows of the Aletsch Glacier, and part of the Jungfrau-Aletsch area, situated on the boundary between the cantons of Bern and Valais, halfway between Interlaken and Fiesch.",
+            rating: 4,
+        },
     ];
 
-    const [currentImage, setCurrentImage] = useState(0);
-    const ServiceImage = [AlpenMountain, Colosseum];
-    const switchImage = (e) => {
-        if (currentImage == 0) {
-            setCurrentImage(1);
-        } else {
-            setCurrentImage(0);
-        }
-    };
+    const destinations = [
+        natureDestinations,
+        artDestinations,
+        cityDestinations,
+    ];
 
     const popularDestinations = [
         {
@@ -100,16 +133,50 @@ export default function Welcome(props) {
             rating: 4.5,
         },
     ];
+    const [titleDestination, setTitleDestination] = useState("Nature");
+    const [currentDestination, setCurrentDestination] = useState([]);
+    const [currentImage, setCurrentImage] = useState(0);
+    const ServiceImage = [AlpenMountain, Colosseum];
+
+    useEffect(() => {
+        setCurrentDestination(natureDestinations);
+    }, []);
+
+    const switchImage = (e) => {
+        if (currentImage == 0) {
+            setCurrentImage(1);
+        } else {
+            setCurrentImage(0);
+        }
+    };
+
+    const handleSwitchDestination = (e) => {
+        const id = e.target.id;
+        if (id == "1") {
+            setCurrentDestination(natureDestinations);
+            setTitleDestination("Nature");
+        } else if (id == "2") {
+            setCurrentDestination(artDestinations);
+            setTitleDestination("Art");
+        } else {
+            setCurrentDestination(cityDestinations);
+            setTitleDestination("City");
+        }
+    };
     return (
         <div className="scroll-smooth bg-white">
             <Head title="Welcome" />
             <div className="w-screen box-border m-0">
-                <Header {...props} />
+                <Header
+                    auth={props.auth}
+                    onChange={handleSwitchDestination}
+                    titleDestination={titleDestination}
+                />
 
                 {/* Nature Destination */}
                 <div className="relative h-fit mt-32 mx-0">
                     <h1 className="font-extrabold mb-5 text-center text-3xl md:text-6xl">
-                        Nature Destination
+                        {titleDestination} Destination
                     </h1>
                     <div className="absolute right-8 -translate-y-20 lg:flex gap-x-3 hidden">
                         <BsFillArrowLeftCircleFill
@@ -122,7 +189,7 @@ export default function Welcome(props) {
                         />
                     </div>
                     <div className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap">
-                        {natureDestinations.map((destination, index) => (
+                        {currentDestination.map((destination, index) => (
                             <CardDestination key={index} {...destination} />
                         ))}
                     </div>
