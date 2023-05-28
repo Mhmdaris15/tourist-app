@@ -14,6 +14,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,68 +43,70 @@ Route::resource('/dashboard/user', UserController::class)->middleware(['auth', '
     'destroy' => 'dashboard.user.destroy',
 ]));
 
-Route::resource('/dashboard/news-category', NewsCategoryController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/news-category', NewsCategoryController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.news-category.index',
     'store' => 'dashboard.news-category.store',
     'update' => 'dashboard.news-category.update',
     'destroy' => 'dashboard.news-category.destroy',
 ]));
 
-Route::resource('/dashboard/news', NewsController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/news', NewsController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.news.index',
     'store' => 'dashboard.news.store',
     'update' => 'dashboard.news.update',
     'destroy' => 'dashboard.news.destroy',
 ]));
 
-Route::resource('/dashboard/travel-category', TravelCategoryController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/travel-category', TravelCategoryController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.travel-category.index',
     'store' => 'dashboard.travel-category.store',
     'update' => 'dashboard.travel-category.update',
     'destroy' => 'dashboard.travel-category.destroy',
 ]));
 
-Route::resource('/dashboard/tourist-attraction', TravelController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/tourist-attraction', TravelController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.tourist-attraction.index',
     'store' => 'dashboard.tourist-attraction.store',
     'update' => 'dashboard.tourist-attraction.update',
     'destroy' => 'dashboard.tourist-attraction.destroy',
 ]));
 
-Route::resource('/dashboard/hostelry', HostelryController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/hostelry', HostelryController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.hostelry.index',
     'store' => 'dashboard.hostelry.store',
     'update' => 'dashboard.hostelry.update',
     'destroy' => 'dashboard.hostelry.destroy',
 ]));
 
-Route::resource('/dashboard/customer', CustomerController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/customer', CustomerController::class)->middleware(['auth', 'verified', 'customer'])->names(([
     'index' => 'dashboard.customer.index',
     'store' => 'dashboard.customer.store',
     'update' => 'dashboard.customer.update',
     'destroy' => 'dashboard.customer.destroy',
 ]));
 
-Route::resource('/dashboard/travel-package', TravelPackageController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/travel-package', TravelPackageController::class)->middleware(['auth', 'verified', 'treasurer'])->names(([
     'index' => 'dashboard.travel-package.index',
     'store' => 'dashboard.travel-package.store',
     'update' => 'dashboard.travel-package.update',
     'destroy' => 'dashboard.travel-package.destroy',
 ]));
 
-Route::resource('/dashboard/employee', EmployeeController::class)->middleware(['auth', 'verified'])->names(([
+Route::resource('/dashboard/employee', EmployeeController::class)->middleware(['auth', 'verified', 'admin'])->names(([
     'index' => 'dashboard.employee.index',
     'store' => 'dashboard.employee.store',
     'update' => 'dashboard.employee.update',
     'destroy' => 'dashboard.employee.destroy',
 ]));
 
-Route::resource('/dashboard/reservation', ReservationController::class)->middleware(['auth', 'verified'])->names(([
-    'index' => 'dashboard.reservation.index',
-    'store' => 'dashboard.reservation.store',
-    'update' => 'dashboard.reservation.update',
-    'destroy' => 'dashboard.reservation.destroy',
-]));
+Route::resource('/dashboard/reservation', ReservationController::class)
+    ->middleware(['auth', 'verified', 'treasurer_or_customer'])
+    ->names([
+        'index' => 'dashboard.reservation.index',
+        'store' => 'dashboard.reservation.store',
+        'update' => 'dashboard.reservation.update',
+        'destroy' => 'dashboard.reservation.destroy',
+    ]);
 
 Route::post('/dashboard/news/{id}', [NewsController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.news.update');
 Route::post('/dashboard/tourist-attraction/{id}', [TravelController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.tourist-attraction.update');
