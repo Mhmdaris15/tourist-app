@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('hostelries', function (Blueprint $table) {
             $table->id();
             $table->string('hostelry_title', 255);
-            $table->text('hostelry_description');
-            $table->text('facilities')->default('');
+            $table->text('hostelry_description')->nullable();
+            $table->text('facilities')->nullable();
             $table->string('image_1', 255);
             $table->string('image_2', 255);
             $table->string('image_3', 255);
