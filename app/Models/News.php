@@ -18,4 +18,5 @@ class News extends Model
     {
         return $this->belongsTo(NewsCategory::class);
     }
+    
 }

@@ -7,6 +7,7 @@ use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -33,6 +34,7 @@ class NewsController extends Controller
             'news_image' => 'required|image|max:2048',
         ]);
 
+        $news['news_slug'] = Str::slug($news['news_title']);
         $news['news_image'] = $request->file('news_image')->store('public/images');
         $news['news_image'] = str_replace('public', 'storage', $news['news_image']);
 
@@ -50,6 +52,7 @@ class NewsController extends Controller
             'news_date' => 'required|date',
             'news_category_id' => 'required|integer',
         ]);
+        $data['news_slug'] = Str::slug($data['news_title']);
 
         if ($request->hasFile('news_image')) {
             $request->validate([

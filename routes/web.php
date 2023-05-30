@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HostelryController;
@@ -118,6 +119,9 @@ Route::post('/dashboard/travel-category/{id}', [TravelCategoryController::class,
 Route::post('/dashboard/travel-package/{id}', [TravelPackageController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.travel-package.update');
 Route::post('/dashboard/employee/{id}', [EmployeeController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.employee.update');
 Route::post('/dashboard/reservation/{id}', [ReservationController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.reservation.update');
+
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 
 Route::redirect('/dashboard', '/dashboard/user', 301)->middleware(['auth', 'verified'])->name('dashboard');
 

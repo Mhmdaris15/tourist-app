@@ -19,14 +19,14 @@ const Header = ({ auth, onChange, titleDestination }) => {
                     </span>
                 </Link>
                 <nav className="flex justify-center items-center gap-x-5">
-                    <Link href="/home" className="text-green-400 text-xl">
+                    <Link href="/" className="text-green-400 text-xl">
                         Home
                     </Link>
                     <Link
-                        href="/booking"
+                        href="/blogs"
                         className="text-xl hover:text-green-400"
                     >
-                        Booking
+                        Blogs
                     </Link>
                     <Link
                         href="/service"
