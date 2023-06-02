@@ -29,7 +29,7 @@ const SingleReservation = (props) => {
         progress,
     } = useForm({
         id: props.id,
-        employee_id: props.employee_id,
+        customer_id: props.customer_id,
         travel_package_id: props.travel_package_id,
         date_of_reservation: props.date_of_reservation,
         price: props.price,
@@ -58,7 +58,7 @@ const SingleReservation = (props) => {
         setConfirmingReservationUpdate(true);
         setData({
             id: props.id,
-            employee_id: props.employee_id,
+            customer_id: props.customer_id,
             travel_package_id: props.travel_package_id,
             date_of_reservation: props.date_of_reservation,
             price: props.price,
@@ -109,7 +109,7 @@ const SingleReservation = (props) => {
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td className="px-6 py-4">{props.id}</td>
-            <td className="px-6 py-4">{props.employee_id} </td>
+            <td className="px-6 py-4">{props.customer_id} </td>
             <td className="px-6 py-4">{props.travel_package_id} </td>
             <td className="px-6 py-4">{props.date_of_reservation} </td>
             <td className="px-6 py-4">{props.price} </td>
@@ -146,6 +146,11 @@ const SingleReservation = (props) => {
                         name="id"
                         value={data.id}
                     />
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     <PrimaryButton type="reset" onClick={closeModal}>
                         Cancel
                     </PrimaryButton>
@@ -162,21 +167,21 @@ const SingleReservation = (props) => {
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         Update Reservation
                     </h2>
-                    {/* <InputLabel
-                        htmlFor="package_name"
+                    <InputLabel
+                        htmlFor="date_of_reservation"
                         className="mt-4"
                         value="Reservation Name"
                     />
                     <TextInput
-                        id="package_name"
+                        id="date_of_reservation"
                         type="text"
-                        name="package_name"
+                        name="date_of_reservation"
                         label="Reservation Name"
-                        value={data.package_name}
+                        value={data.date_of_reservation}
                         onChange={(e) =>
-                            setData("package_name", e.target.value)
+                            setData("date_of_reservation", e.target.value)
                         }
-                        error={errors.package_name}
+                        error={errors.date_of_reservation}
                         className=""
                     />
                     <InputLabel
@@ -241,7 +246,7 @@ const SingleReservation = (props) => {
                                 style={{ width: `${progress}%` }}
                             ></div>
                         </div>
-                    )} */}
+                    )}
 
                     <PrimaryButton type="reset" onClick={closeModal}>
                         Cancel
@@ -256,19 +261,19 @@ const SingleReservation = (props) => {
 };
 
 const ReservationList = (props) => {
-    let { reservations } = useContext(DashboardContext);
+    let { reservations, travel_packages } = useContext(DashboardContext);
     const [confirmingReservationAdd, setConfirmingReservationAdd] =
         useState(false);
     const { data, setData, post, processing, errors, reset, progress } =
         useForm({
-            employee_id: "",
+            customer_id: "",
             travel_package_id: "",
             date_of_reservation: "",
-            price: "",
-            number_of_people: "",
-            discount: "",
-            discount_value: "",
-            total_price: "",
+            price: 0,
+            number_of_people: 0,
+            discount: 0,
+            discount_value: 0,
+            total_price: 0,
             proof_of_payment: "",
             status: "",
         });
@@ -280,6 +285,14 @@ const ReservationList = (props) => {
         { id: 4, name: "Room 3" },
         { id: 5, name: "Room 4" },
     ];
+
+    travel_packages = travel_packages.map((travel, index) => {
+        return {
+            id: travel.id,
+            value: travel.package_name,
+            label: travel.package_name,
+        };
+    });
 
     const addReservation = (e) => {
         e.preventDefault();
@@ -296,6 +309,21 @@ const ReservationList = (props) => {
     const closeModal = () => {
         setConfirmingReservationAdd(false);
         reset();
+    };
+
+    const [discountValue, setDiscountValue] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const onChangePriceOrDiscount = (e) => {
+        setData(e.target.name, e.target.value);
+        console.log(data.price * data.discount);
+        setDiscountValue(data.price * data.discount * 10);
+        setTotalPrice(data.price - discountValue);
+    };
+
+    const handleTravelPackages = (travel_package) => {
+        setData("travel_package_id", travel_package.id);
+        console.log(data);
     };
 
     return (
@@ -315,7 +343,7 @@ const ReservationList = (props) => {
                             ID
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Employee Name
+                            Customer Name
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Travel Package Name
@@ -355,81 +383,128 @@ const ReservationList = (props) => {
             <Modal
                 show={confirmingReservationAdd}
                 onClose={closeModal}
-                maxWidth="xl"
+                className="gap-5"
+                maxWidth="6xl"
             >
-                <form onSubmit={addReservation} className="p-5 w-full">
+                <form
+                    onSubmit={addReservation}
+                    className="p-5 w-full grid grid-cols-3"
+                >
                     <h1 className="text-2xl font-bold">Add Reservation</h1>
-                    {/* <InputLabel
-                        htmlFor="package_name"
-                        className="mt-4"
-                        value="Reservation Name"
-                    />
-                    <TextInput
-                        id="package_name"
-                        type="text"
-                        name="package_name"
-                        label="Reservation Name"
-                        className=""
-                        onChange={(e) =>
-                            setData("package_name", e.target.value)
-                        }
-                        value={data.package_name}
-                    />
-                    <InputLabel
-                        htmlFor="description"
-                        className="mt-4"
-                        value="Reservation Description"
-                    />
-                    <TextInput
-                        id="description"
-                        type="text"
-                        name="description"
-                        label="Reservation Description"
-                        className=""
-                        onChange={(e) => setData("description", e.target.value)}
-                        value={data.description}
-                    />
-                    <InputLabel
-                        htmlFor="facilities"
-                        className="mt-4"
-                        value="Facilities"
-                    />
+                    <div className="mb-5">
+                        <InputLabel
+                            htmlFor="date_of_reservation"
+                            className="mt-4"
+                            value="Date Of Reservation"
+                        />
+                        <TextInput
+                            id="date_of_reservation"
+                            type="date"
+                            name="date_of_reservation"
+                            label="Reservation Name"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("date_of_reservation", e.target.value)
+                            }
+                            value={data.date_of_reservation}
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <InputLabel
+                            htmlFor="price"
+                            className="mt-4"
+                            value="Reservation Price"
+                        />
+                        <TextInput
+                            id="price"
+                            type="number"
+                            name="price"
+                            label="Reservation Price"
+                            className="w-full"
+                            onChange={onChangePriceOrDiscount}
+                            value={data.price}
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <InputLabel
+                            htmlFor="number_of_people"
+                            className="mt-4"
+                            value="Number Of People"
+                        />
+                        <TextInput
+                            id="number_of_people"
+                            type="number"
+                            name="number_of_people"
+                            label="Number Of People"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("number_of_people", e.target.value)
+                            }
+                            value={data.number_of_people}
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <InputLabel
+                            htmlFor="discount"
+                            className="mt-4"
+                            value="Discount"
+                        />
+                        <TextInput
+                            id="discount"
+                            type="number"
+                            step={0.01}
+                            name="discount"
+                            label="Discount"
+                            className="w-full"
+                            onChange={onChangePriceOrDiscount}
+                            value={data.discount}
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <InputLabel
+                            htmlFor="discount_value"
+                            className="mt-4"
+                            value="Discount Value"
+                        />
+                        <TextInput
+                            id="discount_value"
+                            type="number"
+                            step={0.01}
+                            name="discount_value"
+                            label="Discount Value"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("discount_value", e.target.value)
+                            }
+                            value={discountValue}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="total_price"
+                            className="mt-4"
+                            value="Reservation Price"
+                        />
+                        <TextInput
+                            id="total_price"
+                            type="number"
+                            name="total_price"
+                            label="Reservation Price"
+                            className="w-full"
+                            onChange={onChangePriceOrDiscount}
+                            value={totalPrice}
+                        />
+                    </div>
 
-                    <TextAreaInput
-                        id="facilities"
-                        name={"facilities"}
-                        onChange={(e) => setData("facilities", e.target.value)}
-                        value={data.facilities}
-                    />
+                    <div className="mb-3">
+                        <RadioButton
+                            options={travel_packages}
+                            label="Travel Packages"
+                            onData={handleTravelPackages}
+                            className="flex gap-2 flex-wrap w-full"
+                        />
+                    </div>
 
-                    <InputLabel
-                        htmlFor="price"
-                        className="mt-4"
-                        value="Reservation Price"
-                    />
-                    <TextInput
-                        id="price"
-                        type="text"
-                        name="price"
-                        label="Reservation Price"
-                        className=""
-                        onChange={(e) => setData("price", e.target.value)}
-                        value={data.price}
-                    />
-                    <InputLabel
-                        htmlFor="discount"
-                        className="mt-4"
-                        value="Reservation Discount"
-                    />
-                    <TextInput
-                        id="discount"
-                        type="text"
-                        name="discount"
-                        label="Reservation Discount"
-                        className=""
-                        onChange={(e) => setData("discount", e.target.value)}
-                        value={data.discount}
-                    />
                     {images.map((image) => (
                         <div key={image.id}>
                             <InputLabel
@@ -459,11 +534,24 @@ const ReservationList = (props) => {
                                 style={{ width: `${progress}%` }}
                             ></div>
                         </div>
-                    )} */}
-                    <PrimaryButton type="reset" onClick={closeModal}>
+                    )}
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
+                    <PrimaryButton
+                        type="reset"
+                        className="w-fit mt-3"
+                        onClick={closeModal}
+                    >
                         Cancel
                     </PrimaryButton>
-                    <PrimaryButton type="submit" disabled={processing}>
+                    <PrimaryButton
+                        type="submit"
+                        className="w-fit mt-3"
+                        disabled={processing}
+                    >
                         Add
                     </PrimaryButton>
                 </form>

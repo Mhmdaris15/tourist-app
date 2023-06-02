@@ -7,6 +7,7 @@ use App\Http\Controllers\HostelryController;
 use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TravelCategoryController;
 use App\Http\Controllers\TravelController;
@@ -35,7 +36,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::resource('/dashboard/user', UserController::class)->middleware(['auth', 'verified'])->names(([
     'index' => 'dashboard.user',
@@ -86,7 +87,7 @@ Route::resource('/dashboard/customer', CustomerController::class)->middleware(['
     'destroy' => 'dashboard.customer.destroy',
 ]));
 
-Route::resource('/dashboard/travel-package', TravelPackageController::class)->middleware(['auth', 'verified', 'treasurer'])->names(([
+Route::resource('/dashboard/travel-package', TravelPackageController::class)->middleware(['auth', 'verified', 'admin'])->names(([ //treasurer
     'index' => 'dashboard.travel-package.index',
     'store' => 'dashboard.travel-package.store',
     'update' => 'dashboard.travel-package.update',
@@ -101,7 +102,7 @@ Route::resource('/dashboard/employee', EmployeeController::class)->middleware(['
 ]));
 
 Route::resource('/dashboard/reservation', ReservationController::class)
-    ->middleware(['auth', 'verified', 'treasurer_or_customer'])
+    ->middleware(['auth', 'verified', 'admin']) //treasurer_or_customer
     ->names([
         'index' => 'dashboard.reservation.index',
         'store' => 'dashboard.reservation.store',
@@ -119,6 +120,10 @@ Route::post('/dashboard/travel-category/{id}', [TravelCategoryController::class,
 Route::post('/dashboard/travel-package/{id}', [TravelPackageController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.travel-package.update');
 Route::post('/dashboard/employee/{id}', [EmployeeController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.employee.update');
 Route::post('/dashboard/reservation/{id}', [ReservationController::class, 'update'])->middleware(['auth', 'verified'])->name('dashboard.reservation.update');
+
+Route::get('/dashboard/report', [ReportController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.report.index');
+
+// Route::get('/dashboard/new_report', function (Codedge))
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');

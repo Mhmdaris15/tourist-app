@@ -1,3 +1,26 @@
 @tailwind base;
+
+/* Add your custom scrollbar styles here */
+/* For example: */
+/* Width and height of the scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Background color of the scrollbar track */
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Color of the scrollbar handle */
+::-webkit-scrollbar-thumb {
+    background-color: #860101;
+}
+
+/* On hover, color of the scrollbar handle */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #079e85;
+}
 @tailwind components;
 @tailwind utilities;

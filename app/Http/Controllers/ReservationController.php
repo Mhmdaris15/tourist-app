@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\TravelPackage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,9 +11,12 @@ class ReservationController extends Controller
 {
     public function index(){
         $reservations = Reservation::all();
+        // get travel packages id and names
+        $travel_packages = TravelPackage::all(['id', 'package_name']);
         return Inertia::render('Dashboard', [
             'reservations' => $reservations,
-            'page' => 'reservation'
+            'page' => 'reservation',
+            'travel_packages' => $travel_packages
         ]);
     }
 

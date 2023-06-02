@@ -18,6 +18,7 @@ class TravelCategoryFactory extends Factory
     {
         return [
             //
+            "category_name" => $this->faker->name(),
         ];
     }
 }

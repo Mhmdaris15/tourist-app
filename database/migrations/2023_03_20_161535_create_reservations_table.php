@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Customer;
+use App\Models\TravelPackage;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees');
-            $table->foreignId('travel_package_id')->constrained('travel_packages');
             $table->date('date_of_reservation');
             $table->integer('price');
             $table->integer('number_of_people');
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->float('total_price');
             $table->text('proof_of_payment');
             $table->enum('status', ['inorder', 'paid', 'finished']);
+            $table->foreignIdFor(TravelPackage::class, 'travel_package_id');
+            $table->foreignIdFor(Customer::class, 'customer_id');
             $table->timestamps();
         });
     }

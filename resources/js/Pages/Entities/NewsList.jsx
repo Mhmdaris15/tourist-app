@@ -231,6 +231,11 @@ const SingleNews = (props) => {
                         error={errors.news_image}
                         className=""
                     />
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     {progress && (
                         <div className="w-full h-2 bg-gray-200 rounded">
                             <div
@@ -406,6 +411,11 @@ const NewsList = (props) => {
                         }
                         // value={data.news_image ?? ""}
                     />
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     {progress && (
                         <div className="w-full h-2 bg-gray-200 rounded">
                             <div

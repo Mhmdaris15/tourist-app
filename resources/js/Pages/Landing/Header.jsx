@@ -64,6 +64,15 @@ const Header = ({ auth, onChange, titleDestination }) => {
                     >
                         Dashboard
                     </Link>
+                    <Link
+                        href={route("logout")}
+                        method="post"
+                        className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
+                            user ? "" : "hidden"
+                        }`}
+                    >
+                        Logout
+                    </Link>
                 </nav>
             </div>
             <div

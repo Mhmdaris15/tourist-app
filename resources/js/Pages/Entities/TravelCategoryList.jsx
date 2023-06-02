@@ -243,6 +243,11 @@ const TravelCategoryList = (props) => {
                         Add
                     </PrimaryButton>
                 </form>
+                {Object.keys(errors).map((key) => (
+                    <div className="text-red-500 text-sm mt-4" key={key}>
+                        {key} :{errors[key]}
+                    </div>
+                ))}
             </Modal>
         </>
     );

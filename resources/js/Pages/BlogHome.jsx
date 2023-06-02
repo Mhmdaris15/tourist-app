@@ -61,17 +61,26 @@ const BlogHome = (props) => {
                     >
                         Dashboard
                     </Link>
+                    <Link
+                        href={route("logout")}
+                        method="post"
+                        className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
+                            authenticated ? "" : "hidden"
+                        }`}
+                    >
+                        Logout
+                    </Link>
                 </nav>
             </div>
-            <div className="grid grid-cols-2 place-content-center mx-auto gap-5 w-full">
+            <div className="grid pt-5 md:grid-cols-2 justify-items-center mx-auto gap-5 w-full">
                 {blogs.map((blog, index) => (
-                    <a
+                    <Link
                         key={index}
                         href={`/blogs/${blog.news_slug}`}
-                        className="flex flex-col items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                        className="flex md:flex-row flex-col w-full cursor-pointer p-3 md:max-h-52 max-h-80 overflow-hidden bg-white border border-gray-200 rounded-lg shadow md:max-w-xl hover:bg-green-400 hover:border-gray-900 transition-all lg:hover:translate-x-6 hover:-translate-y-1 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                     >
                         <img
-                            className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                            className="object-cover w-full rounded-t-lg h-1/2 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
                             src={`/${blog.news_image}`}
                             alt=""
                         />
@@ -83,7 +92,7 @@ const BlogHome = (props) => {
                                 {blog.news_content}
                             </p>
                         </div>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>

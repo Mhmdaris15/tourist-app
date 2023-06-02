@@ -36,7 +36,6 @@ const SingleUser = (props) => {
         setData({
             id: props.id,
         });
-        // console.log("useEffect", data);
     }, [props.id]);
 
     const confirmUserDeletion = () => {
@@ -44,8 +43,6 @@ const SingleUser = (props) => {
         setData({
             id: props.id,
         });
-        // console.log("confirmUserDeletion", data);
-        // console.log(route("dashboard.destroy", { id: pro     ps.id }));
     };
 
     const confirmUserUpdate = () => {
@@ -60,7 +57,6 @@ const SingleUser = (props) => {
     };
 
     const deleteUser = (e) => {
-        // console.log("deleteUser");
         e.preventDefault();
 
         destroy(route("dashboard.user.destroy", { id: props.id }), {
@@ -127,7 +123,7 @@ const SingleUser = (props) => {
                 </form>
             </Modal>
             <Modal show={confirmingUserUpdate} onClose={closeModal}>
-                <form onSubmit={updateUser} className="p-6">
+                <form onSubmit={updateUser} className="p-6 h-fit overflow-auto">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
                         Update Account
                     </h2>
@@ -243,6 +239,11 @@ const SingleUser = (props) => {
                             </Dropdown.Menu>
                         </Dropdown.Content>
                     </Dropdown>
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     <PrimaryButton type="reset" onClick={closeModal}>
                         Cancel
                     </PrimaryButton>
@@ -283,11 +284,10 @@ const UserList = (props) => {
 
     const handleRoleData = (role) => {
         setData("role", role.value);
-        console.log(data);
     };
 
     return (
-        <>
+        <div className="max-w-[85%] mx-auto">
             <SecondaryButton
                 className="ml-4 mb-4"
                 onClick={() => {
@@ -296,29 +296,31 @@ const UserList = (props) => {
             >
                 Add User
             </SecondaryButton>
-            <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Email
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Role
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <SingleUser key={user.id} {...user} />
-                    ))}
-                </tbody>
-            </table>
+            <div>
+                <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Email
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Role
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map((user) => (
+                            <SingleUser key={user.id} {...user} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             <Modal show={confirmingUserAdd} onClose={closeModal}>
                 <form onSubmit={addUser} className="p-5">
                     <h1 className="text-2xl font-bold">Add User</h1>
@@ -372,6 +374,11 @@ const UserList = (props) => {
                         label="Role"
                         onData={handleRoleData}
                     />
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     <PrimaryButton type="reset" onClick={closeModal}>
                         Cancel
                     </PrimaryButton>
@@ -380,7 +387,7 @@ const UserList = (props) => {
                     </PrimaryButton>
                 </form>
             </Modal>
-        </>
+        </div>
     );
 };
 

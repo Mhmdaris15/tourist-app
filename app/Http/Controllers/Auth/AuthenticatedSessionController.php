@@ -34,7 +34,22 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // return redirect()->intended(RouteServiceProvider::HOME);
+        $role = Auth::user()->role;
+        switch ($role){
+            case 'admin':
+                return redirect()->route('dashboard.user')->with('success', 'Login successfully');
+                break;
+            case 'customer':
+                return redirect()->route('dashboard.customer.index')->with('success', 'Login successfully');
+                break;
+            case 'treasurer':
+                return redirect()->route('dashboard.travel-package.index')->with('success', 'Login successfully');
+                break;
+            default:
+                return redirect()->route('dashboard.user')->with('success', 'Login successfully');
+                break;
+        }
     }
 
     /**

@@ -232,6 +232,11 @@ const SingleHostelry = (props) => {
                             </div>
                         </>
                     ))}
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     {progress && (
                         <div className="w-full h-2 bg-gray-200 rounded">
                             <div
@@ -413,6 +418,11 @@ const HostelryList = (props) => {
                                     )
                                 }
                             />
+                        </div>
+                    ))}
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
                         </div>
                     ))}
                     {progress && (

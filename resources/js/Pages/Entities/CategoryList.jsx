@@ -142,7 +142,11 @@ const SingleCategory = (props) => {
                         error={errors.news_category_name}
                         className="mb-2"
                     />
-
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     <PrimaryButton
                         className="mr-2"
                         type="reset"
@@ -223,6 +227,11 @@ const CategoryList = (props) => {
                         value={data.news_category_name}
                         className="mb-2"
                     />
+                    {Object.keys(errors).map((key) => (
+                        <div className="text-red-500 text-sm mt-4" key={key}>
+                            {key} :{errors[key]}
+                        </div>
+                    ))}
                     <PrimaryButton
                         className="mr-2"
                         type="reset"
