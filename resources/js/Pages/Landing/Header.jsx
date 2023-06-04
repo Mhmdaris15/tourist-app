@@ -90,7 +90,7 @@ const Header = ({ auth, onChange, titleDestination }) => {
                 <div className="relative bg-gray-600 z-10 w-fit py-5 px-7 mt-5 mx-auto md:mx-0 rounded-full text-gray-100 hover:bg-gray-200 hover:text-gray-700 transition-all ease-in-out">
                     Explore <Bs.BsArrowRight className="inline text-2xl ml-2" />
                 </div>
-                <div className="bg-gray-50 translate-y-16 lg:w-2/5  grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
+                <div className="bg-gray-50 translate-y-16 w-max-4xl grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
                     <div
                         onClick={onChange}
                         id="1"

@@ -84,7 +84,7 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="sidebar sticky flex flex-col items-center overflow-x-visible left-0 top-0 w-24 h-screen bg-gradient-to-t from-blue-400 to-emerald-400 dark:bg-gradient-to-t dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500">
+        <aside className="sidebar sticky flex flex-col items-center z-50 left-0 top-0 w-24 h-screen bg-gradient-to-t from-blue-400 to-emerald-400 dark:bg-gradient-to-t dark:from-rose-400 dark:via-fuchsia-500 dark:to-indigo-500">
             <div className="h-1/6">
                 <NevtikLogo className="w-28" />
             </div>

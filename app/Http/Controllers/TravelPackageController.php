@@ -17,13 +17,21 @@ class TravelPackageController extends Controller
         ]);
     }
 
+    public function show($slug)
+    {
+        $travelPackage = TravelPackage::where('slug', $slug)->firstOrFail();
+        return Inertia::render('TravelPackage', [
+            'travelPackage' => $travelPackage,
+        ]);
+    }
+
     public function store(Request $request){
         $travelPackage = $request->validate([
             'package_name' => 'required|string|max:255',
             'description' => 'required|string',
             'facilities' => 'required|string',
             'price' => 'required|integer',
-            'discount' => 'required|numeric',
+            'discount' => 'required',
         ]);
 
         for ($i = 1; $i <= 5; $i++) {

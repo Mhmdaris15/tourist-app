@@ -277,7 +277,7 @@ const TravelPackageList = (props) => {
             description: "",
             facilities: "",
             price: "",
-            discount: "",
+            discount: 0,
             image_1: "Default Image",
             image_2: "Default Image",
             image_3: "Default Image",
@@ -367,83 +367,103 @@ const TravelPackageList = (props) => {
             <Modal
                 show={confirmingTravelPackageAdd}
                 onClose={closeModal}
-                maxWidth="xl"
+                maxWidth="6xl"
             >
-                <form onSubmit={addTravelPackage} className="p-5 w-full">
+                <form
+                    onSubmit={addTravelPackage}
+                    className="p-5 w-full grid grid-cols-3 gap-3"
+                >
                     <h1 className="text-2xl font-bold">Add Travel Package</h1>
-                    <InputLabel
-                        htmlFor="package_name"
-                        className="mt-4"
-                        value="Travel Package Name"
-                    />
-                    <TextInput
-                        id="package_name"
-                        type="text"
-                        name="package_name"
-                        label="Travel Package Name"
-                        className=""
-                        onChange={(e) =>
-                            setData("package_name", e.target.value)
-                        }
-                        value={data.package_name}
-                    />
-                    <InputLabel
-                        htmlFor="description"
-                        className="mt-4"
-                        value="Travel Package Description"
-                    />
-                    <TextInput
-                        id="description"
-                        type="text"
-                        name="description"
-                        label="Travel Package Description"
-                        className=""
-                        onChange={(e) => setData("description", e.target.value)}
-                        value={data.description}
-                    />
-                    <InputLabel
-                        htmlFor="facilities"
-                        className="mt-4"
-                        value="Facilities"
-                    />
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="package_name"
+                            className="mt-4"
+                            value="Travel Package Name"
+                        />
+                        <TextInput
+                            id="package_name"
+                            type="text"
+                            name="package_name"
+                            label="Travel Package Name"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("package_name", e.target.value)
+                            }
+                            value={data.package_name}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="description"
+                            className="mt-4"
+                            value="Travel Package Description"
+                        />
+                        <TextInput
+                            id="description"
+                            type="text"
+                            name="description"
+                            label="Travel Package Description"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("description", e.target.value)
+                            }
+                            value={data.description}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="facilities"
+                            className="mt-4"
+                            value="Facilities"
+                        />
+                        <TextAreaInput
+                            id="facilities"
+                            name={"facilities"}
+                            onChange={(e) =>
+                                setData("facilities", e.target.value)
+                            }
+                            className={"w-full"}
+                            value={data.facilities}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="price"
+                            className="mt-4"
+                            value="Travel Package Price"
+                        />
+                        <TextInput
+                            id="price"
+                            type="text"
+                            name="price"
+                            label="Travel Package Price"
+                            className="w-full"
+                            onChange={(e) => setData("price", e.target.value)}
+                            value={data.price}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="discount"
+                            className="mt-4"
+                            value="Travel Package Discount"
+                        />
 
-                    <TextAreaInput
-                        id="facilities"
-                        name={"facilities"}
-                        onChange={(e) => setData("facilities", e.target.value)}
-                        value={data.facilities}
-                    />
-
-                    <InputLabel
-                        htmlFor="price"
-                        className="mt-4"
-                        value="Travel Package Price"
-                    />
-                    <TextInput
-                        id="price"
-                        type="text"
-                        name="price"
-                        label="Travel Package Price"
-                        className=""
-                        onChange={(e) => setData("price", e.target.value)}
-                        value={data.price}
-                    />
-                    <InputLabel
-                        htmlFor="discount"
-                        className="mt-4"
-                        value="Travel Package Discount"
-                    />
-                    <TextInput
-                        id="discount"
-                        type="text"
-                        name="discount"
-                        label="Travel Package Discount"
-                        className=""
-                        onChange={(e) => setData("discount", e.target.value)}
-                        value={data.discount}
-                    />
+                        <TextInput
+                            id="discount"
+                            type="number"
+                            step="0.01"
+                            name="discount"
+                            label="Travel Package Discount"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("discount", e.target.value)
+                            }
+                            value={data.discount}
+                        />
+                    </div>
                     {images.map((image) => (
-                        <div key={image.id}>
+                        <div className="mb-3" key={image.id}>
                             <InputLabel
                                 htmlFor={`image_${image.id}`}
                                 className="mt-4"
@@ -454,7 +474,7 @@ const TravelPackageList = (props) => {
                                 type="file"
                                 name={`image_${image.id}`}
                                 label={image.name}
-                                className=""
+                                className="w-full"
                                 onChange={(e) =>
                                     setData(
                                         `image_${image.id}`,
@@ -477,12 +497,14 @@ const TravelPackageList = (props) => {
                             ></div>
                         </div>
                     )}
-                    <PrimaryButton type="reset" onClick={closeModal}>
-                        Cancel
-                    </PrimaryButton>
-                    <PrimaryButton type="submit" disabled={processing}>
-                        Add
-                    </PrimaryButton>
+                    <div className="mb-3">
+                        <PrimaryButton type="reset" onClick={closeModal}>
+                            Cancel
+                        </PrimaryButton>
+                        <PrimaryButton type="submit" disabled={processing}>
+                            Add
+                        </PrimaryButton>
+                    </div>
                 </form>
             </Modal>
         </>

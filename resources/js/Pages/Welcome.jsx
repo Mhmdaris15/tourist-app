@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 // list of images from folder
 
 export default function Welcome(props) {
+    const { travel_packages } = props;
     const natureDestinations = [
         {
             name: "Mount Bromo",
@@ -189,9 +190,9 @@ export default function Welcome(props) {
                         />
                     </div>
                     <div className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap">
-                        {currentDestination.map((destination, index) => (
+                        {/* {currentDestination.map((destination, index) => (
                             <CardDestination key={index} {...destination} />
-                        ))}
+                        ))} */}
                     </div>
                 </div>
 
@@ -202,7 +203,7 @@ export default function Welcome(props) {
                     </h1>
 
                     <div className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap">
-                        {popularDestinations.map((destination, index) => (
+                        {travel_packages.map((destination, index) => (
                             <CardDestination key={index} {...destination} />
                         ))}
                     </div>

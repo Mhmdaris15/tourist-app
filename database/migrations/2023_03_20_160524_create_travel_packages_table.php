@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('travel_packages', function (Blueprint $table) {
             $table->id();
             $table->string('package_name', 255);
+            $table->string('slug', 255);
             $table->text('description');
             $table->text('facilities');
             $table->integer('price');
-            $table->decimal('discount', $precision = 10, $scale = 0);
-            $table->string('image_1', 255);
-            $table->string('image_2', 255);
-            $table->string('image_3', 255);
-            $table->string('image_4', 255);
-            $table->string('image_5', 255);
+            $table->float("discount", 8, 2);
+            $table->string('image_1', 255)->nullable();
+            $table->string('image_2', 255)->nullable();
+            $table->string('image_3', 255)->nullable();
+            $table->string('image_4', 255)->nullable();
+            $table->string('image_5', 255)->nullable();
             $table->timestamps();
         });
     }

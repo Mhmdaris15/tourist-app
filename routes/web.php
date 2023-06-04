@@ -16,6 +16,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Models\TravelPackage;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -30,11 +31,13 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
+    $travel_packages = TravelPackage::all();
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'travel_packages' => $travel_packages,
     ]);
 })->name('home');
 
@@ -127,6 +130,9 @@ Route::get('/dashboard/report', [ReportController::class, 'index'])->middleware(
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+
+Route::get('/travel-packages', [TravelPackageController::class, 'index'])->name('travel-packages.index');
+Route::get('/travel-packages/{slug}', [TravelPackageController::class, 'show'])->name('travel-packages.show');
 
 Route::redirect('/dashboard', '/dashboard/user', 301)->middleware(['auth', 'verified'])->name('dashboard');
 
