@@ -12,7 +12,7 @@ class ReservationController extends Controller
     public function index(){
         $reservations = Reservation::all();
         // get travel packages id and names
-        $travel_packages = TravelPackage::all(['id', 'package_name']);
+        $travel_packages = TravelPackage::all();
         return Inertia::render('Dashboard', [
             'reservations' => $reservations,
             'page' => 'reservation',

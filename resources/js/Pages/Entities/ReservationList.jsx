@@ -3,7 +3,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Modal from "@/Components/Modal";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import Dropdown from "@/Components/Dropdown";
 import RadioButton from "@/Components/RadioButton";
@@ -264,6 +264,7 @@ const ReservationList = (props) => {
     let { reservations, travel_packages } = useContext(DashboardContext);
     const [confirmingReservationAdd, setConfirmingReservationAdd] =
         useState(false);
+    const [rParam, setRParam] = useState(null);
     const { data, setData, post, processing, errors, reset, progress } =
         useForm({
             customer_id: "",
@@ -278,6 +279,15 @@ const ReservationList = (props) => {
             status: "",
         });
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rParam = urlParams.get("r");
+        setRParam(rParam);
+        if (rParam) {
+            setConfirmingReservationAdd(true);
+            console.log(travel_packages);
+        }
+    }, []);
     const images = [
         { id: 1, name: "Main" },
         { id: 2, name: "Room 1" },
@@ -286,11 +296,12 @@ const ReservationList = (props) => {
         { id: 5, name: "Room 4" },
     ];
 
-    travel_packages = travel_packages.map((travel, index) => {
+    const travel_packages_transformed = travel_packages.map((travel, index) => {
         return {
             id: travel.id,
             value: travel.package_name,
             label: travel.package_name,
+            ...travel,
         };
     });
 
@@ -498,7 +509,7 @@ const ReservationList = (props) => {
 
                     <div className="mb-3">
                         <RadioButton
-                            options={travel_packages}
+                            options={travel_packages_transformed}
                             label="Travel Packages"
                             onData={handleTravelPackages}
                             className="flex gap-2 flex-wrap w-full"
