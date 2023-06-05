@@ -401,7 +401,7 @@ const ReservationList = (props) => {
                     onSubmit={addReservation}
                     className="p-5 w-full grid grid-cols-3"
                 >
-                    <h1 className="text-2xl font-bold">Add Reservation</h1>
+                    <h1 className="text-4xl font-bold">Add Reservation</h1>
                     <div className="mb-5">
                         <InputLabel
                             htmlFor="date_of_reservation"
@@ -428,6 +428,7 @@ const ReservationList = (props) => {
                         />
                         <TextInput
                             id="price"
+                            step={0.1}
                             type="number"
                             name="price"
                             label="Reservation Price"
@@ -487,7 +488,7 @@ const ReservationList = (props) => {
                             onChange={(e) =>
                                 setData("discount_value", e.target.value)
                             }
-                            value={discountValue}
+                            value={data.discount_value}
                         />
                     </div>
                     <div className="mb-3">
@@ -499,15 +500,23 @@ const ReservationList = (props) => {
                         <TextInput
                             id="total_price"
                             type="number"
+                            step={0.1}
                             name="total_price"
                             label="Reservation Price"
                             className="w-full"
-                            onChange={onChangePriceOrDiscount}
-                            value={totalPrice}
+                            onChange={(e) =>
+                                setData("total_price", e.target.value)
+                            }
+                            value={data.total_price}
                         />
                     </div>
 
-                    <div className="mb-3">
+                    <div className="mb-3 col-span-2 w-full">
+                        <InputLabel
+                            htmlFor="travel_package"
+                            className="mt-4"
+                            value="Travel Package"
+                        />
                         <RadioButton
                             options={travel_packages_transformed}
                             label="Travel Packages"
@@ -551,20 +560,22 @@ const ReservationList = (props) => {
                             {key} :{errors[key]}
                         </div>
                     ))}
-                    <PrimaryButton
-                        type="reset"
-                        className="w-fit mt-3"
-                        onClick={closeModal}
-                    >
-                        Cancel
-                    </PrimaryButton>
-                    <PrimaryButton
-                        type="submit"
-                        className="w-fit mt-3"
-                        disabled={processing}
-                    >
-                        Add
-                    </PrimaryButton>
+                    <div className="mb-3 flex gap-3 items-end">
+                        <PrimaryButton
+                            type="reset"
+                            className="w-fit h-fit mt-3"
+                            onClick={closeModal}
+                        >
+                            Cancel
+                        </PrimaryButton>
+                        <PrimaryButton
+                            type="submit"
+                            className="w-fit h-fit mt-3"
+                            disabled={processing}
+                        >
+                            Add
+                        </PrimaryButton>
+                    </div>
                 </form>
             </Modal>
         </>

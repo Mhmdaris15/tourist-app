@@ -6,8 +6,15 @@ import { AiFillStar } from "react-icons/ai";
 import { Link } from "@inertiajs/react";
 
 const CardDestination = (props) => {
-    const { package_name, slug, facilities, description, price, discount } =
-        props;
+    const {
+        package_name,
+        slug,
+        facilities,
+        description,
+        price,
+        discount,
+        image_1,
+    } = props;
     const rating = 4.5;
     return (
         <Link
@@ -15,7 +22,7 @@ const CardDestination = (props) => {
             className="flex flex-col cursor-pointer hover:-translate-y-2 transition-all lg:w-1/4 md:w-1/2 bg-slate-50 rounded-lg"
         >
             <img
-                src={Image}
+                src={`${image_1 != null ? "/" + image_1 : Image}`}
                 alt="Travel Destination Image"
                 className="relative w-fit rounded-t-lg"
             />

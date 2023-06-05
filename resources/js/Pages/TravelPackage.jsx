@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Head, Link } from "@inertiajs/react";
+import Image from "../../images/deutschland-view.jpg";
+import Modal from "@/Components/Modal";
 
 const TravelPackage = (props) => {
     const {
@@ -16,6 +18,18 @@ const TravelPackage = (props) => {
         image_5,
     } = props.travelPackage;
 
+    const [showImage, setShowImage] = useState(false);
+    const [imgSrc, setImgSrc] = useState("");
+
+    const onClickImage = (e) => {
+        setShowImage(true);
+        setImgSrc(e.target.src);
+    };
+
+    const closeModal = () => {
+        setShowImage(false);
+    };
+
     return (
         <div>
             <Head title={`Travel Package | ${package_name} `} />
@@ -24,11 +38,39 @@ const TravelPackage = (props) => {
             </h1>
             <div className="w-full flex gap-x-5 pr-8">
                 <div className="grid grid-cols-3 gap-3 w-3/5 pl-8">
-                    <img className="rounded-lg" src={`/${image_1}`} alt="" />
-                    <img className="rounded-lg" src={`/${image_2}`} alt="" />
-                    <img className="rounded-lg" src={`/${image_3}`} alt="" />
-                    <img className="rounded-lg" src={`/${image_4}`} alt="" />
-                    <img className="rounded-lg" src={`/${image_5}`} alt="" />
+                    <Modal show={showImage} onClose={closeModal}>
+                        <img src={imgSrc} className="w-fit" alt="" />
+                    </Modal>
+                    <img
+                        className="rounded-lg cursor-pointer"
+                        src={`${image_1 != null ? "/" + image_1 : Image}`}
+                        alt=""
+                        onClick={onClickImage}
+                    />
+                    <img
+                        className="rounded-lg cursor-pointer"
+                        src={`${image_2 != null ? "/" + image_2 : Image}`}
+                        alt=""
+                        onClick={onClickImage}
+                    />
+                    <img
+                        className="rounded-lg cursor-pointer"
+                        src={`${image_3 != null ? "/" + image_3 : Image}`}
+                        alt=""
+                        onClick={onClickImage}
+                    />
+                    <img
+                        className="rounded-lg cursor-pointer"
+                        src={`${image_4 != null ? "/" + image_4 : Image}`}
+                        alt=""
+                        onClick={onClickImage}
+                    />
+                    <img
+                        className="rounded-lg cursor-pointer"
+                        src={`${image_5 != null ? "/" + image_5 : Image}`}
+                        alt=""
+                        onClick={onClickImage}
+                    />
                 </div>
                 <div className="relative flex flex-col w-2/6 mx-auto bg-gray-100 rounded-lg">
                     <h3 className="font-bold text-center pt-10 text-lg text-gray-900">

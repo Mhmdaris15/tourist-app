@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import SwitchToggle from "@/Components/SwitchToggle";
 import Sidebar from "@/Pages/Partials/Sidebar";
+import { FaHome } from "react-icons/fa";
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -24,7 +25,7 @@ export default function Authenticated({ auth, header, children }) {
                             <div className="flex">
                                 <div className="shrink-0 flex items-center">
                                     <Link href="/">
-                                        <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                        <FaHome className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                     </Link>
                                 </div>
 
