@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Modal from "@/Components/Modal";
 import { useForm, usePage } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
-import Dropdown from "@/Components/Dropdown";
 import RadioButton from "@/Components/RadioButton";
 import InputLabel from "@/Components/InputLabel";
 import TextAreaInput from "@/Components/TextAreaInput";
@@ -210,35 +209,7 @@ const SingleReservation = (props) => {
                         onChange={(e) => setData("facilities", e.target.value)}
                         value={data.facilities}
                     />
-                    {images.map((image) => (
-                        <>
-                            <div className="flex gap-x-5 items-center">
-                                <InputLabel
-                                    htmlFor={"image_" + image.id}
-                                    className="mt-4"
-                                    value={"Reservation " + image.name}
-                                />
-                                <img
-                                    width={150}
-                                    src={"/" + props["image_" + image.id]}
-                                    alt={props.name + " " + image.name}
-                                />
-                                <TextInput
-                                    id={"image_" + image.id}
-                                    type="file"
-                                    name={"image_" + image.id}
-                                    label={"Reservation " + image.name}
-                                    className=""
-                                    onChange={(e) =>
-                                        setData(
-                                            "image_" + image.id,
-                                            e.target.files[0]
-                                        )
-                                    }
-                                />
-                            </div>
-                        </>
-                    ))}
+
                     {progress && (
                         <div className="w-full h-2 bg-gray-200 rounded">
                             <div
@@ -264,19 +235,33 @@ const ReservationList = (props) => {
     let { reservations, travel_packages } = useContext(DashboardContext);
     const [confirmingReservationAdd, setConfirmingReservationAdd] =
         useState(false);
+    const {
+        props: {
+            auth: {
+                user: { id: user_id },
+            },
+        },
+    } = usePage();
+
+    console.log(user_id);
+    const priceRef = useRef(null);
+    const discountRef = useRef(null);
+    const discountValueRef = useRef(null);
+    const totalPriceRef = useRef(null);
+
     const [rParam, setRParam] = useState(null);
     const { data, setData, post, processing, errors, reset, progress } =
         useForm({
-            customer_id: "",
-            travel_package_id: "",
-            date_of_reservation: "",
-            price: 0,
-            number_of_people: 0,
-            discount: 0,
-            discount_value: 0,
-            total_price: 0,
+            date_of_reservation: Date.now(),
+            number_of_people: parseInt(0),
+            price: parseFloat(0),
+            discount: parseFloat(0),
+            discount_value: parseFloat(0),
+            total_price: parseFloat(0),
             proof_of_payment: "",
-            status: "",
+            status: "Pending",
+            travel_package_id: parseInt(0),
+            customer_id: user_id,
         });
 
     useEffect(() => {
@@ -288,13 +273,6 @@ const ReservationList = (props) => {
             console.log(travel_packages);
         }
     }, []);
-    const images = [
-        { id: 1, name: "Main" },
-        { id: 2, name: "Room 1" },
-        { id: 3, name: "Room 2" },
-        { id: 4, name: "Room 3" },
-        { id: 5, name: "Room 4" },
-    ];
 
     const travel_packages_transformed = travel_packages.map((travel, index) => {
         return {
@@ -304,6 +282,12 @@ const ReservationList = (props) => {
             ...travel,
         };
     });
+
+    const statuses = [
+        { value: "Pending", label: "Pending" },
+        { value: "Approved", label: "Approved" },
+        { value: "Rejected", label: "Rejected" },
+    ];
 
     const addReservation = (e) => {
         e.preventDefault();
@@ -322,18 +306,26 @@ const ReservationList = (props) => {
         reset();
     };
 
-    const [discountValue, setDiscountValue] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-
-    const onChangePriceOrDiscount = (e) => {
-        setData(e.target.name, e.target.value);
-        console.log(data.price * data.discount);
-        setDiscountValue(data.price * data.discount * 10);
-        setTotalPrice(data.price - discountValue);
+    const handleStatus = (status) => {
+        setData("status", status.value);
     };
 
     const handleTravelPackages = (travel_package) => {
-        setData("travel_package_id", travel_package.id);
+        priceRef.current.value = travel_package.price;
+        discountRef.current.value = travel_package.discount;
+        discountValueRef.current.value =
+            priceRef.current.value *
+            discountRef.current.value *
+            data.number_of_people;
+        totalPriceRef.current.value =
+            priceRef.current.value * data.number_of_people -
+            discountValueRef.current.value;
+
+        setData("price", parseInt(priceRef.current.value));
+        setData("discount", parseInt(discountRef.current.value));
+        setData("discount_value", parseInt(discountValueRef.current.value));
+        setData("total_price", parseInt(totalPriceRef.current.value));
+        setData("travel_package_id", parseInt(travel_package.id));
         console.log(data);
     };
 
@@ -433,8 +425,8 @@ const ReservationList = (props) => {
                             name="price"
                             label="Reservation Price"
                             className="w-full"
-                            onChange={onChangePriceOrDiscount}
-                            value={data.price}
+                            disabled={true}
+                            ref={priceRef}
                         />
                     </div>
                     <div className="mb-5">
@@ -468,8 +460,8 @@ const ReservationList = (props) => {
                             name="discount"
                             label="Discount"
                             className="w-full"
-                            onChange={onChangePriceOrDiscount}
-                            value={data.discount}
+                            disabled={true}
+                            ref={discountRef}
                         />
                     </div>
                     <div className="mb-5">
@@ -485,10 +477,8 @@ const ReservationList = (props) => {
                             name="discount_value"
                             label="Discount Value"
                             className="w-full"
-                            onChange={(e) =>
-                                setData("discount_value", e.target.value)
-                            }
-                            value={data.discount_value}
+                            disabled={true}
+                            ref={discountValueRef}
                         />
                     </div>
                     <div className="mb-3">
@@ -504,10 +494,8 @@ const ReservationList = (props) => {
                             name="total_price"
                             label="Reservation Price"
                             className="w-full"
-                            onChange={(e) =>
-                                setData("total_price", e.target.value)
-                            }
-                            value={data.total_price}
+                            disabled={true}
+                            ref={totalPriceRef}
                         />
                     </div>
 
@@ -524,29 +512,36 @@ const ReservationList = (props) => {
                             className="flex gap-2 flex-wrap w-full"
                         />
                     </div>
-
-                    {images.map((image) => (
-                        <div key={image.id}>
-                            <InputLabel
-                                htmlFor={`image_${image.id}`}
-                                className="mt-4"
-                                value={image.name}
-                            />
-                            <TextInput
-                                id={`image_${image.id}`}
-                                type="file"
-                                name={`image_${image.id}`}
-                                label={image.name}
-                                className=""
-                                onChange={(e) =>
-                                    setData(
-                                        `image_${image.id}`,
-                                        e.target.files[0]
-                                    )
-                                }
-                            />
-                        </div>
-                    ))}
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="proof_of_payment"
+                            className="mt-4"
+                            value="Proof Of Payment"
+                        />
+                        <TextInput
+                            id="proof_of_payment"
+                            type="file"
+                            name="proof_of_payment"
+                            label="Proof of Payment"
+                            className="w-full"
+                            onChange={(e) =>
+                                setData("proof_of_payment", e.target.files[0])
+                            }
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <InputLabel
+                            htmlFor="status"
+                            className="mt-4"
+                            value="Status of Payment"
+                        />
+                        <RadioButton
+                            options={statuses}
+                            label="Status of Payment"
+                            onData={handleStatus}
+                            className="flex gap-2 flex-wrap w-full"
+                        />
+                    </div>
                     {progress && (
                         <div className="w-full h-2 bg-gray-200 rounded">
                             <div

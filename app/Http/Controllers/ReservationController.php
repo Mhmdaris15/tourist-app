@@ -22,7 +22,7 @@ class ReservationController extends Controller
 
     public function store(Request $request){
         $reservation = $request->validate([
-            'employee_id' => 'required|integer',
+            'customer_id' => 'required|integer',
             'travel_package_id' => 'required|integer',
             'date_of_reservation' => 'required|date',
             'price' => 'required|integer',
@@ -30,9 +30,15 @@ class ReservationController extends Controller
             'discount' => 'required|integer',
             'discount_value' => 'required|integer',
             'total_price' => 'required|integer',
-            'proof_of_payment' => 'required|string',
             'status' => 'required',
         ]);
+
+        if($request->has('proof_of_payment')){
+            $request->validate([
+                'proof_of_payment' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            ]);
+            $reservation['proof_of_payment'] = $request->file('proof_of_payment')->store('proof_of_payment');
+        }
 
         Reservation::create($reservation);
         return redirect()->route('dashboard.reservation.index')->with('success', 'Reservation created successfully');
@@ -41,7 +47,7 @@ class ReservationController extends Controller
     public function update(Request $request, $id){
         $reservation = Reservation::find($id);
         $data = $request->validate([
-            'employee_id' => 'required|integer',
+            'customer_id' => 'required|integer',
             'travel_package_id' => 'required|integer',
             'date_of_reservation' => 'required|date',
             'price' => 'required|integer',
@@ -49,7 +55,6 @@ class ReservationController extends Controller
             'discount' => 'required|integer',
             'discount_value' => 'required|integer',
             'total_price' => 'required|integer',
-            'proof_of_payment' => 'required|string',
             'status' => 'required',
         ]);
 

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('discount', $precision = 10, $scale = 0);
             $table->float('discount_value');
             $table->float('total_price');
-            $table->text('proof_of_payment');
-            $table->enum('status', ['inorder', 'paid', 'finished']);
+            $table->string('proof_of_payment');
+            $table->enum('status', ['Pending', 'Approved', 'Rejected']);
             $table->foreignIdFor(TravelPackage::class, 'travel_package_id');
             $table->foreignIdFor(Customer::class, 'customer_id');
             $table->timestamps();
