@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import UserList from "./Entities/UserList";
@@ -21,6 +21,29 @@ const Dashboard = (props) => {
     let { success, error, warning, info } = flash;
 
     let loadedComponent = null;
+
+    useEffect(() => {
+        if (success) {
+            setTimeout(() => {
+                document.getElementById("toast-success").remove();
+            }, 5000);
+        }
+        if (error) {
+            setTimeout(() => {
+                document.getElementById("toast-error").remove();
+            }, 5000);
+        }
+        if (warning) {
+            setTimeout(() => {
+                document.getElementById("toast-warning").remove();
+            }, 5000);
+        }
+        if (info) {
+            setTimeout(() => {
+                document.getElementById("toast-info").remove();
+            }, 5000);
+        }
+    }, [success, error, warning, info]);
 
     switch (props.page) {
         case "user":

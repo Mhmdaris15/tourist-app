@@ -23,6 +23,7 @@
         "daisyui": "^2.51.4",
         "flowbite": "^1.6.5",
         "flowbite-react": "^0.4.4",
+        "framer-motion": "^10.12.16",
         "react-icons": "^4.8.0",
         "require": "^0.4.4"
     }

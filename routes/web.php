@@ -105,7 +105,7 @@ Route::resource('/dashboard/employee', EmployeeController::class)->middleware(['
 ]));
 
 Route::resource('/dashboard/reservation', ReservationController::class)
-    ->middleware(['auth', 'verified', 'admin']) //treasurer_or_customer
+    ->middleware(['auth', 'verified']) //treasurer_or_customer
     ->names([
         'index' => 'dashboard.reservation.index',
         'store' => 'dashboard.reservation.store',

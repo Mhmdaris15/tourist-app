@@ -24,5 +24,8 @@ class Reservation extends Model
     {
         return $this->hasMany(TravelPackage::class);
     }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
-

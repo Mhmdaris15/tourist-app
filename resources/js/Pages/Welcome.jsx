@@ -11,6 +11,7 @@ import AlpenMountain from "../../images/alpine-mountain.jpg";
 import Colosseum from "../../images/colloseum-view.jpg";
 import CardDestination from "./Landing/CardDestination";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 // list of images from folder
 
@@ -202,16 +203,30 @@ export default function Welcome(props) {
                         Popular Destination
                     </h1>
 
-                    <div className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap">
+                    <motion.div
+                        initial={{ opacity: 0, y: 200 }}
+                        whileInView={{
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 1 },
+                        }}
+                        className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap"
+                    >
                         {travel_packages.map((destination, index) => (
-                            <CardDestination key={index} {...destination} />
+                            <CardDestination {...destination} />
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Our Services */}
                 <div className="relative grid md:grid-cols-2 grid-rows-4 md:grid-rows-1 h-fit md:mt-16 mt-40 mx-0">
-                    <div
+                    <motion.div
+                        initial={{ opacity: 0, x: -200 }}
+                        whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            transition: { duration: 1 },
+                        }}
                         className="cursor-pointer md:h-full h-fit flex place-content-center place-items-center"
                         onClick={switchImage}
                     >
@@ -225,8 +240,16 @@ export default function Welcome(props) {
                             src={ServiceImage[Number(!currentImage)]}
                             alt="Colosseum Italy"
                         />
-                    </div>
-                    <div className="md:w-2/3 w-5/6 mx-auto md:mx-0 flex flex-col md:rows-span1 row-span-3 gap-y-7 items-center md:items-start">
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: 200 }}
+                        whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            transition: { duration: 0.7 },
+                        }}
+                        className="md:w-2/3 w-5/6 mx-auto md:mx-0 flex flex-col md:rows-span1 row-span-3 gap-y-7 items-center md:items-start"
+                    >
                         <h1 className="font-extrabold text-3xl">
                             We Offer Best Services
                         </h1>
@@ -286,7 +309,7 @@ export default function Welcome(props) {
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date_of_reservation');
             $table->integer('price');
             $table->integer('number_of_people');
-            $table->decimal('discount', $precision = 10, $scale = 0);
+            $table->float('discount');
             $table->float('discount_value');
             $table->float('total_price');
             $table->string('proof_of_payment');

@@ -23,9 +23,9 @@ export default function RadioButton({ options, onData, className = "" }) {
                         Server size
                     </RadioGroup.Label>
                     <div className={"space-y-1 " + className}>
-                        {options.map((option) => (
+                        {options.map((option, index) => (
                             <RadioGroup.Option
-                                key={option.id}
+                                key={index}
                                 value={option.value}
                                 onClick={() => updateSelectedOption(option)}
                                 className={({ active, checked }) =>

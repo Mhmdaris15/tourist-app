@@ -5,6 +5,7 @@ import { Link, Head } from "@inertiajs/react";
 import NevtikLogo from "../../../images/logo-nevtik.png";
 import Cappodacia from "../../../images/cappadocia-view.jpg";
 import * as Bs from "react-icons/bs";
+import { motion } from "framer-motion";
 
 const Header = ({ auth, onChange, titleDestination }) => {
     const { user } = auth ?? {};
@@ -13,12 +14,28 @@ const Header = ({ auth, onChange, titleDestination }) => {
         <div>
             <div className="w-full flex items-center justify-around bg-white">
                 <Link href="/">
-                    <span className="flex items-center font-extrabold text-3xl font-mono">
+                    <motion.span
+                        initial={{ opacity: 0, x: -400 }}
+                        animate={{
+                            opacity: 1,
+                            x: 0,
+                            transition: { duration: 1.5 },
+                        }}
+                        className="flex items-center font-extrabold text-3xl font-mono"
+                    >
                         <img src={NevtikLogo} alt="" width={100} />
                         <p>NEVTIK TOURIST</p>
-                    </span>
+                    </motion.span>
                 </Link>
-                <nav className="flex justify-center items-center gap-x-5">
+                <motion.nav
+                    initial={{ opacity: 0, x: 400 }}
+                    animate={{
+                        opacity: 1,
+                        x: 0,
+                        transition: { duration: 1.5 },
+                    }}
+                    className="flex justify-center items-center gap-x-5"
+                >
                     <Link href="/" className="text-green-400 text-xl">
                         Home
                     </Link>
@@ -73,9 +90,11 @@ const Header = ({ auth, onChange, titleDestination }) => {
                     >
                         Logout
                     </Link>
-                </nav>
+                </motion.nav>
             </div>
-            <div
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1, transition: { duration: 1 } }}
                 className="bg-cover bg-center h-fit md:px-32 pt-32"
                 style={{
                     backgroundImage: `url(${Cappodacia})`,
@@ -125,7 +144,7 @@ const Header = ({ auth, onChange, titleDestination }) => {
                         City
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
