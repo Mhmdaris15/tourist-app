@@ -9,6 +9,8 @@ import RadioButton from "@/Components/RadioButton";
 import InputLabel from "@/Components/InputLabel";
 import TextAreaInput from "@/Components/TextAreaInput";
 import { DashboardContext } from "../Dashboard";
+import { Document } from "@react-pdf/renderer";
+import { Page } from "@react-pdf/renderer";
 
 const SingleReservation = (props) => {
     const [confirmingReservationDeletion, setConfirmingReservationDeletion] =
@@ -584,255 +586,274 @@ const ReservationList = (props) => {
     };
 
     return (
-        <>
-            <SecondaryButton
-                className="ml-4 mb-4"
-                onClick={() => {
-                    setConfirmingReservationAdd(true);
-                }}
-            >
-                Add New Reservation
-            </SecondaryButton>
-            <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            ID
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Customer Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Travel Package Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Date of Reservation
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Price
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Number of People
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Discount
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Discount Value
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Total Price
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Proof of Payment
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Status
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reservations.map((item, index) => (
-                        <SingleReservation key={item.id} {...item} />
-                    ))}
-                </tbody>
-            </table>
-            <Modal
-                show={confirmingReservationAdd}
-                onClose={closeModal}
-                className="gap-5"
-                maxWidth="6xl"
-            >
-                <form
-                    onSubmit={addReservation}
-                    className="p-5 w-full grid grid-cols-3"
+        <Document>
+            <Page>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        setConfirmingReservationAdd(true);
+                    }}
                 >
-                    <h1 className="text-4xl font-bold">Add Reservation</h1>
-                    <div className="mb-5">
-                        <InputLabel
-                            htmlFor="date_of_reservation"
-                            className="mt-4"
-                            value="Date Of Reservation"
-                        />
-                        <TextInput
-                            id="date_of_reservation"
-                            type="date"
-                            name="date_of_reservation"
-                            label="Reservation Name"
-                            className="w-full"
-                            onChange={(e) =>
-                                setData("date_of_reservation", e.target.value)
-                            }
-                            value={data.date_of_reservation}
-                        />
-                    </div>
-                    <div className="mb-5">
-                        <InputLabel
-                            htmlFor="price"
-                            className="mt-4"
-                            value="Reservation Price"
-                        />
-                        <TextInput
-                            id="price"
-                            step={0.1}
-                            type="number"
-                            name="price"
-                            label="Reservation Price"
-                            className="w-full"
-                            disabled={true}
-                            ref={priceRef}
-                            onChange={handlePrice}
-                        />
-                    </div>
-                    <div className="mb-5">
-                        <InputLabel
-                            htmlFor="number_of_people"
-                            className="mt-4"
-                            value="Number Of People"
-                        />
-                        <TextInput
-                            id="number_of_people"
-                            type="number"
-                            name="number_of_people"
-                            label="Number Of People"
-                            className="w-full"
-                            onChange={handleNumberOfPeople}
-                            value={data.number_of_people}
-                        />
-                    </div>
-                    <div className="mb-5">
-                        <InputLabel
-                            htmlFor="discount"
-                            className="mt-4"
-                            value="Discount"
-                        />
-                        <TextInput
-                            id="discount"
-                            type="number"
-                            step={0.01}
-                            name="discount"
-                            label="Discount"
-                            className="w-full"
-                            disabled={true}
-                            ref={discountRef}
-                            onChange={handleDiscount}
-                        />
-                    </div>
-                    <div className="mb-5">
-                        <InputLabel
-                            htmlFor="discount_value"
-                            className="mt-4"
-                            value="Discount Value"
-                        />
-                        <TextInput
-                            id="discount_value"
-                            type="number"
-                            step={0.01}
-                            name="discount_value"
-                            label="Discount Value"
-                            className="w-full"
-                            disabled={true}
-                            ref={discountValueRef}
-                            onChange={handleDiscountValue}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <InputLabel
-                            htmlFor="total_price"
-                            className="mt-4"
-                            value="Reservation Price"
-                        />
-                        <TextInput
-                            id="total_price"
-                            type="number"
-                            step={0.1}
-                            name="total_price"
-                            label="Reservation Price"
-                            className="w-full"
-                            disabled={true}
-                            ref={totalPriceRef}
-                            onChange={handleTotalPrice}
-                        />
-                    </div>
+                    Add New Reservation
+                </SecondaryButton>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        window.print();
+                    }}
+                >
+                    Generate PDF
+                </SecondaryButton>
+                <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                ID
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Customer Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Travel Package Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Date of Reservation
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Price
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Number of People
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Discount
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Discount Value
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Total Price
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Proof of Payment
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reservations.map((item, index) => (
+                            <SingleReservation key={item.id} {...item} />
+                        ))}
+                    </tbody>
+                </table>
+                <Modal
+                    show={confirmingReservationAdd}
+                    onClose={closeModal}
+                    className="gap-5"
+                    maxWidth="6xl"
+                >
+                    <form
+                        onSubmit={addReservation}
+                        className="p-5 w-full grid grid-cols-3"
+                    >
+                        <h1 className="text-4xl font-bold">Add Reservation</h1>
+                        <div className="mb-5">
+                            <InputLabel
+                                htmlFor="date_of_reservation"
+                                className="mt-4"
+                                value="Date Of Reservation"
+                            />
+                            <TextInput
+                                id="date_of_reservation"
+                                type="date"
+                                name="date_of_reservation"
+                                label="Reservation Name"
+                                className="w-full"
+                                onChange={(e) =>
+                                    setData(
+                                        "date_of_reservation",
+                                        e.target.value
+                                    )
+                                }
+                                value={data.date_of_reservation}
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <InputLabel
+                                htmlFor="price"
+                                className="mt-4"
+                                value="Reservation Price"
+                            />
+                            <TextInput
+                                id="price"
+                                step={0.1}
+                                type="number"
+                                name="price"
+                                label="Reservation Price"
+                                className="w-full"
+                                disabled={true}
+                                ref={priceRef}
+                                onChange={handlePrice}
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <InputLabel
+                                htmlFor="number_of_people"
+                                className="mt-4"
+                                value="Number Of People"
+                            />
+                            <TextInput
+                                id="number_of_people"
+                                type="number"
+                                name="number_of_people"
+                                label="Number Of People"
+                                className="w-full"
+                                onChange={handleNumberOfPeople}
+                                value={data.number_of_people}
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <InputLabel
+                                htmlFor="discount"
+                                className="mt-4"
+                                value="Discount"
+                            />
+                            <TextInput
+                                id="discount"
+                                type="number"
+                                step={0.01}
+                                name="discount"
+                                label="Discount"
+                                className="w-full"
+                                disabled={true}
+                                ref={discountRef}
+                                onChange={handleDiscount}
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <InputLabel
+                                htmlFor="discount_value"
+                                className="mt-4"
+                                value="Discount Value"
+                            />
+                            <TextInput
+                                id="discount_value"
+                                type="number"
+                                step={0.01}
+                                name="discount_value"
+                                label="Discount Value"
+                                className="w-full"
+                                disabled={true}
+                                ref={discountValueRef}
+                                onChange={handleDiscountValue}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <InputLabel
+                                htmlFor="total_price"
+                                className="mt-4"
+                                value="Reservation Price"
+                            />
+                            <TextInput
+                                id="total_price"
+                                type="number"
+                                step={0.1}
+                                name="total_price"
+                                label="Reservation Price"
+                                className="w-full"
+                                disabled={true}
+                                ref={totalPriceRef}
+                                onChange={handleTotalPrice}
+                            />
+                        </div>
 
-                    <div className="mb-3 col-span-2 w-full">
-                        <InputLabel
-                            htmlFor="travel_package"
-                            className="mt-4"
-                            value="Travel Package"
-                        />
-                        <RadioButton
-                            options={travel_packages_transformed}
-                            label="Travel Packages"
-                            onData={handleTravelPackages}
-                            className="flex gap-2 flex-wrap w-full"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <InputLabel
-                            htmlFor="proof_of_payment"
-                            className="mt-4"
-                            value="Proof Of Payment"
-                        />
-                        <TextInput
-                            id="proof_of_payment"
-                            type="file"
-                            name="proof_of_payment"
-                            label="Proof of Payment"
-                            className="w-full"
-                            onChange={(e) =>
-                                setData("proof_of_payment", e.target.files[0])
-                            }
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <InputLabel
-                            htmlFor="status"
-                            className="mt-4"
-                            value="Status of Payment"
-                        />
-                        <RadioButton
-                            options={statuses}
-                            label="Status of Payment"
-                            onData={handleStatus}
-                            className="flex gap-2 flex-wrap w-full"
-                        />
-                    </div>
-                    {progress && (
-                        <div className="w-full h-2 bg-gray-200 rounded">
+                        <div className="mb-3 col-span-2 w-full">
+                            <InputLabel
+                                htmlFor="travel_package"
+                                className="mt-4"
+                                value="Travel Package"
+                            />
+                            <RadioButton
+                                options={travel_packages_transformed}
+                                label="Travel Packages"
+                                onData={handleTravelPackages}
+                                className="flex gap-2 flex-wrap w-full"
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <InputLabel
+                                htmlFor="proof_of_payment"
+                                className="mt-4"
+                                value="Proof Of Payment"
+                            />
+                            <TextInput
+                                id="proof_of_payment"
+                                type="file"
+                                name="proof_of_payment"
+                                label="Proof of Payment"
+                                className="w-full"
+                                onChange={(e) =>
+                                    setData(
+                                        "proof_of_payment",
+                                        e.target.files[0]
+                                    )
+                                }
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <InputLabel
+                                htmlFor="status"
+                                className="mt-4"
+                                value="Status of Payment"
+                            />
+                            <RadioButton
+                                options={statuses}
+                                label="Status of Payment"
+                                onData={handleStatus}
+                                className="flex gap-2 flex-wrap w-full"
+                            />
+                        </div>
+                        {progress && (
+                            <div className="w-full h-2 bg-gray-200 rounded">
+                                <div
+                                    className="h-2 bg-blue-500 rounded"
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                        )}
+                        {Object.keys(errors).map((key) => (
                             <div
-                                className="h-2 bg-blue-500 rounded"
-                                style={{ width: `${progress}%` }}
-                            ></div>
+                                className="text-red-500 text-sm mt-4"
+                                key={key}
+                            >
+                                {key} :{errors[key]}
+                            </div>
+                        ))}
+                        <div className="mb-3 flex gap-3 items-end">
+                            <PrimaryButton
+                                type="reset"
+                                className="w-fit h-fit mt-3"
+                                onClick={closeModal}
+                            >
+                                Cancel
+                            </PrimaryButton>
+                            <PrimaryButton
+                                type="submit"
+                                className="w-fit h-fit mt-3"
+                                disabled={processing}
+                            >
+                                Add
+                            </PrimaryButton>
                         </div>
-                    )}
-                    {Object.keys(errors).map((key) => (
-                        <div className="text-red-500 text-sm mt-4" key={key}>
-                            {key} :{errors[key]}
-                        </div>
-                    ))}
-                    <div className="mb-3 flex gap-3 items-end">
-                        <PrimaryButton
-                            type="reset"
-                            className="w-fit h-fit mt-3"
-                            onClick={closeModal}
-                        >
-                            Cancel
-                        </PrimaryButton>
-                        <PrimaryButton
-                            type="submit"
-                            className="w-fit h-fit mt-3"
-                            disabled={processing}
-                        >
-                            Add
-                        </PrimaryButton>
-                    </div>
-                </form>
-            </Modal>
-        </>
+                    </form>
+                </Modal>
+            </Page>
+        </Document>
     );
 };
 

@@ -36,60 +36,57 @@ const Header = ({ auth, onChange, titleDestination }) => {
                     }}
                     className="flex justify-center items-center gap-x-5"
                 >
-                    <Link href="/" className="text-green-400 text-xl">
-                        Home
-                    </Link>
-                    <Link
-                        href="/blogs"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Blogs
-                    </Link>
-                    <Link
-                        href="/service"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Service
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Contact
-                    </Link>
-                    <Link
-                        href="/register"
+                    <div className="text-green-400 group relative inline-block py-2 px-4 border border-transparent text-base font-medium transition duration-200 ease-in-out">
+                        <Link
+                            className="relative z-10 font-ubuntu text-lg"
+                            href="/"
+                        >
+                            Home
+                        </Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="/blogs">Blogs</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="#services">Service</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="#contactus">Contact</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div
                         className={`text-xl ml-5 py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
                             user ? "hidden" : ""
                         }`}
                     >
-                        Register
-                    </Link>
-                    <Link
-                        href="/login"
+                        <Link href="/register">Register</Link>
+                    </div>
+                    <div
                         className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
                             user ? "hidden" : ""
                         }`}
                     >
-                        Login
-                    </Link>
-                    <Link
-                        href="/dashboard"
+                        <Link href="/login">Login</Link>
+                    </div>
+                    <div
                         className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
                             user ? "" : "hidden"
                         }`}
                     >
-                        Dashboard
-                    </Link>
-                    <Link
-                        href={route("logout")}
-                        method="post"
+                        <Link href="/dashboard">Dashboard</Link>
+                    </div>
+                    <div
                         className={`text-xl py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${
                             user ? "" : "hidden"
                         }`}
                     >
-                        Logout
-                    </Link>
+                        <Link href={route("logout")} method="post">
+                            Logout
+                        </Link>
+                    </div>
                 </motion.nav>
             </div>
             <motion.div
@@ -109,7 +106,7 @@ const Header = ({ auth, onChange, titleDestination }) => {
                 <div className="relative bg-gray-600 z-10 w-fit py-5 px-7 mt-5 mx-auto md:mx-0 rounded-full text-gray-100 hover:bg-gray-200 hover:text-gray-700 transition-all ease-in-out">
                     Explore <Bs.BsArrowRight className="inline text-2xl ml-2" />
                 </div>
-                <div className="bg-gray-50 translate-y-16 w-max-4xl grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
+                <div className="bg-gray-50 translate-y-16 max-w-6xl grid grid-cols-3 mx-auto px-10 py-7 rounded-lg gap-x-10">
                     <div
                         onClick={onChange}
                         id="1"

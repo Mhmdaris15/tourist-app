@@ -16,27 +16,27 @@ const BlogHome = (props) => {
                     </span>
                 </Link>
                 <nav className="flex justify-center items-center gap-x-5">
-                    <Link href="/" className="text-green-400 text-xl">
-                        Home
-                    </Link>
-                    <Link
-                        href="/blogs"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Blogs
-                    </Link>
-                    <Link
-                        href="/service"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Service
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className="text-xl hover:text-green-400"
-                    >
-                        Contact
-                    </Link>
+                    <div className="text-green-400 group relative inline-block py-2 px-4 border border-transparent text-base font-medium transition duration-200 ease-in-out">
+                        <Link
+                            className="relative z-10 font-ubuntu text-lg"
+                            href="/"
+                        >
+                            Home
+                        </Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="/blogs">Blogs</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="#services">Service</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
+                    <div className="text-xl hover:text-green-400 group relative inline-block py-2 px-4 border border-transparent font-medium transition duration-200 ease-in-out">
+                        <Link href="#contactus">Contact</Link>
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-green-600 transform scale-x-0 origin-left transition-transform duration-200 ease-in-out group-hover:scale-x-100"></span>
+                    </div>
                     <Link
                         href="/register"
                         className={`text-xl ml-5 py-2 px-3 rounded-md text-gray-50 bg-green-400 hover:bg-green-500 transition-colors hover:shadow-md ${

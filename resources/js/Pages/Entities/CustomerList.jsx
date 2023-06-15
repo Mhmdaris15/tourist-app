@@ -10,6 +10,8 @@ import RadioButton from "@/Components/RadioButton";
 import InputLabel from "@/Components/InputLabel";
 import TextAreaInput from "@/Components/TextAreaInput";
 import { DashboardContext } from "../Dashboard";
+import { Document } from "@react-pdf/renderer";
+import { Page } from "@react-pdf/renderer";
 
 const SingleCustomer = (props) => {
     const [confirmingCustomerDeletion, setconfirmingCustomerDeletion] =
@@ -112,6 +114,7 @@ const SingleCustomer = (props) => {
                     <img src={"/" + props.photo} alt={props.customer_name} />
                 </figure>
             </td>
+            <td className="px-6 py-4">{props.id}</td>
 
             <td className="px-6 py-4">
                 <PrimaryButton className="mr-2" onClick={confirmCustomerUpdate}>
@@ -295,141 +298,156 @@ const CustomerList = (props) => {
     };
 
     return (
-        <>
-            <SecondaryButton
-                className="ml-4 mb-4"
-                onClick={() => {
-                    setconfirmingCustomerAdd(true);
-                }}
-            >
-                Add New Customer
-            </SecondaryButton>
-            <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Customer Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Phone Number
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            address
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Photo
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            User ID
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {customers.map((item) => (
-                        <SingleCustomer key={item.id} {...item} />
-                    ))}
-                </tbody>
-            </table>
-            <Modal
-                show={confirmingCustomerAdd}
-                onClose={closeModal}
-                maxWidth="xl"
-            >
-                <form onSubmit={addCustomer} className="p-5 w-full">
-                    <h1 className="text-2xl font-bold">Add Customer</h1>
-                    <InputLabel
-                        htmlFor="customer_name"
-                        className="mt-4"
-                        value="Customer Title"
-                    />
-                    <TextInput
-                        id="customer_name"
-                        type="text"
-                        name="customer_name"
-                        label="Customer Title"
-                        className=""
-                        onChange={(e) =>
-                            setData("customer_name", e.target.value)
-                        }
-                        value={data.customer_name}
-                    />
-                    <InputLabel
-                        htmlFor="phone_number"
-                        className="mt-4"
-                        value="Phone Number"
-                    />
-                    <TextInput
-                        id="phone_number"
-                        type="number"
-                        name="phone_number"
-                        label="Phone Number"
-                        className=""
-                        onChange={(e) =>
-                            setData("phone_number", e.target.value)
-                        }
-                        value={data.phone_number}
-                    />
-                    <InputLabel
-                        htmlFor="address"
-                        className="mt-4"
-                        value="address"
-                    />
+        <Document>
+            <Page>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        setconfirmingCustomerAdd(true);
+                    }}
+                >
+                    Add New Customer
+                </SecondaryButton>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        window.print();
+                    }}
+                >
+                    Generate PDF
+                </SecondaryButton>
+                <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Customer Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Phone Number
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                address
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Photo
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                User ID
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {customers.map((item) => (
+                            <SingleCustomer key={item.id} {...item} />
+                        ))}
+                    </tbody>
+                </table>
+                <Modal
+                    show={confirmingCustomerAdd}
+                    onClose={closeModal}
+                    maxWidth="xl"
+                >
+                    <form onSubmit={addCustomer} className="p-5 w-full">
+                        <h1 className="text-2xl font-bold">Add Customer</h1>
+                        <InputLabel
+                            htmlFor="customer_name"
+                            className="mt-4"
+                            value="Customer Title"
+                        />
+                        <TextInput
+                            id="customer_name"
+                            type="text"
+                            name="customer_name"
+                            label="Customer Title"
+                            className=""
+                            onChange={(e) =>
+                                setData("customer_name", e.target.value)
+                            }
+                            value={data.customer_name}
+                        />
+                        <InputLabel
+                            htmlFor="phone_number"
+                            className="mt-4"
+                            value="Phone Number"
+                        />
+                        <TextInput
+                            id="phone_number"
+                            type="number"
+                            name="phone_number"
+                            label="Phone Number"
+                            className=""
+                            onChange={(e) =>
+                                setData("phone_number", e.target.value)
+                            }
+                            value={data.phone_number}
+                        />
+                        <InputLabel
+                            htmlFor="address"
+                            className="mt-4"
+                            value="address"
+                        />
 
-                    <TextAreaInput
-                        id="address"
-                        name="address"
-                        onChange={(e) => setData("address", e.target.value)}
-                        value={data.address}
-                    />
-                    <InputLabel
-                        htmlFor="user_id"
-                        className="mt-4"
-                        value="User ID"
-                    />
-                    <RadioButton
-                        options={users}
-                        label="User ID"
-                        onData={handleUserData}
-                        className="flex gap-2 flex-wrap w-full"
-                    />
-                    <InputLabel
-                        htmlFor="photo"
-                        className="mt-4"
-                        value="Customer Photo"
-                    />
-                    <TextInput
-                        id="photo"
-                        type="file"
-                        name="photo"
-                        label="Customer Photo"
-                        className=""
-                        onChange={(e) => setData("photo", e.target.files[0])}
-                    />
-                    {Object.keys(errors).map((key) => (
-                        <div className="text-red-500 text-sm mt-4" key={key}>
-                            {key} :{errors[key]}
-                        </div>
-                    ))}
-                    {progress && (
-                        <div className="w-full h-2 bg-gray-200 rounded">
+                        <TextAreaInput
+                            id="address"
+                            name="address"
+                            onChange={(e) => setData("address", e.target.value)}
+                            value={data.address}
+                        />
+                        <InputLabel
+                            htmlFor="user_id"
+                            className="mt-4"
+                            value="User ID"
+                        />
+                        <RadioButton
+                            options={users}
+                            label="User ID"
+                            onData={handleUserData}
+                            className="flex gap-2 flex-wrap w-full"
+                        />
+                        <InputLabel
+                            htmlFor="photo"
+                            className="mt-4"
+                            value="Customer Photo"
+                        />
+                        <TextInput
+                            id="photo"
+                            type="file"
+                            name="photo"
+                            label="Customer Photo"
+                            className=""
+                            onChange={(e) =>
+                                setData("photo", e.target.files[0])
+                            }
+                        />
+                        {Object.keys(errors).map((key) => (
                             <div
-                                className="h-2 bg-blue-500 rounded"
-                                style={{ width: `${progress}%` }}
-                            ></div>
-                        </div>
-                    )}
-                    <PrimaryButton type="reset" onClick={closeModal}>
-                        Cancel
-                    </PrimaryButton>
-                    <PrimaryButton type="submit" disabled={processing}>
-                        Add
-                    </PrimaryButton>
-                </form>
-            </Modal>
-        </>
+                                className="text-red-500 text-sm mt-4"
+                                key={key}
+                            >
+                                {key} :{errors[key]}
+                            </div>
+                        ))}
+                        {progress && (
+                            <div className="w-full h-2 bg-gray-200 rounded">
+                                <div
+                                    className="h-2 bg-blue-500 rounded"
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                        )}
+                        <PrimaryButton type="reset" onClick={closeModal}>
+                            Cancel
+                        </PrimaryButton>
+                        <PrimaryButton type="submit" disabled={processing}>
+                            Add
+                        </PrimaryButton>
+                    </form>
+                </Modal>
+            </Page>
+        </Document>
     );
 };
 

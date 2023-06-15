@@ -10,6 +10,8 @@ import Dropdown from "@/Components/Dropdown";
 import RadioButton from "@/Components/RadioButton";
 import InputLabel from "@/Components/InputLabel";
 import { DashboardContext } from "../Dashboard";
+import { Document } from "@react-pdf/renderer";
+import { Page } from "@react-pdf/renderer";
 
 const SingleUser = (props) => {
     const [imageURL, setImageURL] = useState("");
@@ -287,107 +289,138 @@ const UserList = (props) => {
     };
 
     return (
-        <div className="max-w-[85%] mx-auto">
-            <SecondaryButton
-                className="ml-4 mb-4"
-                onClick={() => {
-                    setConfirmingUserAdd(true);
-                }}
-            >
-                Add User
-            </SecondaryButton>
-            <div>
-                <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Role
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user) => (
-                            <SingleUser key={user.id} {...user} />
+        <Document className="max-w-[85%] mx-auto">
+            <Page>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        setConfirmingUserAdd(true);
+                    }}
+                >
+                    Add User
+                </SecondaryButton>
+                <SecondaryButton
+                    className="ml-4 mb-4"
+                    onClick={() => {
+                        window.print();
+                    }}
+                >
+                    Generate PDF
+                </SecondaryButton>
+                <div>
+                    <table className="container mx-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Email
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Role
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((user) => (
+                                <SingleUser key={user.id} {...user} />
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <Modal show={confirmingUserAdd} onClose={closeModal}>
+                    <form onSubmit={addUser} className="p-5">
+                        <h1 className="text-2xl font-bold">Add User</h1>
+                        <InputLabel
+                            htmlFor="name"
+                            className="mt-4"
+                            value="Name"
+                        />
+                        <TextInput
+                            id="name"
+                            type="text"
+                            name="name"
+                            label="Name"
+                            className=""
+                            onChange={(e) => setData("name", e.target.value)}
+                            value={data.name}
+                        />
+                        <InputLabel
+                            htmlFor="email"
+                            className="mt-4"
+                            value="Email"
+                        />
+                        <TextInput
+                            id="email"
+                            type="email"
+                            name="email"
+                            label="Email"
+                            className=""
+                            onChange={(e) => setData("email", e.target.value)}
+                            value={data.email}
+                        />
+                        <InputLabel
+                            htmlFor="password"
+                            className="mt-4"
+                            value="Password"
+                        />
+                        <TextInput
+                            id="password"
+                            type="password"
+                            name="password"
+                            label="Password"
+                            className=""
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
+                            value={data.password}
+                        />
+                        <InputLabel
+                            htmlFor="role"
+                            className="mt-4"
+                            value="Role"
+                        />
+                        <RadioButton
+                            options={[
+                                { id: "1", value: "admin", label: "Admin" },
+                                { id: "2", value: "user", label: "User" },
+                                {
+                                    id: "3",
+                                    value: "treasurer",
+                                    label: "Treasurer",
+                                },
+                                {
+                                    id: "4",
+                                    value: "customer",
+                                    label: "Customer",
+                                },
+                                { id: "5", value: "owner", label: "Owner" },
+                            ]}
+                            label="Role"
+                            onData={handleRoleData}
+                        />
+                        {Object.keys(errors).map((key) => (
+                            <div
+                                className="text-red-500 text-sm mt-4"
+                                key={key}
+                            >
+                                {key} :{errors[key]}
+                            </div>
                         ))}
-                    </tbody>
-                </table>
-            </div>
-            <Modal show={confirmingUserAdd} onClose={closeModal}>
-                <form onSubmit={addUser} className="p-5">
-                    <h1 className="text-2xl font-bold">Add User</h1>
-                    <InputLabel htmlFor="name" className="mt-4" value="Name" />
-                    <TextInput
-                        id="name"
-                        type="text"
-                        name="name"
-                        label="Name"
-                        className=""
-                        onChange={(e) => setData("name", e.target.value)}
-                        value={data.name}
-                    />
-                    <InputLabel
-                        htmlFor="email"
-                        className="mt-4"
-                        value="Email"
-                    />
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        label="Email"
-                        className=""
-                        onChange={(e) => setData("email", e.target.value)}
-                        value={data.email}
-                    />
-                    <InputLabel
-                        htmlFor="password"
-                        className="mt-4"
-                        value="Password"
-                    />
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        label="Password"
-                        className=""
-                        onChange={(e) => setData("password", e.target.value)}
-                        value={data.password}
-                    />
-                    <InputLabel htmlFor="role" className="mt-4" value="Role" />
-                    <RadioButton
-                        options={[
-                            { id: "1", value: "admin", label: "Admin" },
-                            { id: "2", value: "user", label: "User" },
-                            { id: "3", value: "treasurer", label: "Treasurer" },
-                            { id: "4", value: "customer", label: "Customer" },
-                            { id: "5", value: "owner", label: "Owner" },
-                        ]}
-                        label="Role"
-                        onData={handleRoleData}
-                    />
-                    {Object.keys(errors).map((key) => (
-                        <div className="text-red-500 text-sm mt-4" key={key}>
-                            {key} :{errors[key]}
-                        </div>
-                    ))}
-                    <PrimaryButton type="reset" onClick={closeModal}>
-                        Cancel
-                    </PrimaryButton>
-                    <PrimaryButton type="submit" disabled={processing}>
-                        Add
-                    </PrimaryButton>
-                </form>
-            </Modal>
-        </div>
+                        <PrimaryButton type="reset" onClick={closeModal}>
+                            Cancel
+                        </PrimaryButton>
+                        <PrimaryButton type="submit" disabled={processing}>
+                            Add
+                        </PrimaryButton>
+                    </form>
+                </Modal>
+            </Page>
+        </Document>
     );
 };
 

@@ -25,6 +25,7 @@
         "flowbite-react": "^0.4.4",
         "framer-motion": "^10.12.16",
         "react-icons": "^4.8.0",
+        "react-pdf": "^7.1.2",
         "require": "^0.4.4"
     }
 }

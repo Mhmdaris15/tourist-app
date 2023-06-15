@@ -83,7 +83,7 @@ Route::resource('/dashboard/hostelry', HostelryController::class)->middleware(['
     'destroy' => 'dashboard.hostelry.destroy',
 ]));
 
-Route::resource('/dashboard/customer', CustomerController::class)->middleware(['auth', 'verified', 'customer'])->names(([
+Route::resource('/dashboard/customer', CustomerController::class)->middleware(['auth', 'verified'])->names(([
     'index' => 'dashboard.customer.index',
     'store' => 'dashboard.customer.store',
     'update' => 'dashboard.customer.update',

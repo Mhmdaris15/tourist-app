@@ -12,6 +12,7 @@ import Colosseum from "../../images/colloseum-view.jpg";
 import CardDestination from "./Landing/CardDestination";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Footer from "./Partials/Footer";
 
 // list of images from folder
 
@@ -131,7 +132,7 @@ export default function Welcome(props) {
             name: "Cordoba Mosque",
             location: "Cordoba, Spain",
             description:
-                "The Mosque–Cathedral of Córdoba, officially known by its ecclesiastical name of Cathedral of Our Lady of the Assumption, is the cathedral of the Roman Catholic Diocese of Córdoba dedicated to the Assumption of Mary and located in the Spanish region of Andalusia.",
+                "The Mosque-Cathedral of Córdoba, officially known by its ecclesiastical name of Cathedral of Our Lady of the Assumption, is the cathedral of the Roman Catholic Diocese of Córdoba dedicated to the Assumption of Mary and located in the Spanish region of Andalusia.",
             rating: 4.5,
         },
     ];
@@ -191,9 +192,9 @@ export default function Welcome(props) {
                         />
                     </div>
                     <div className="w-[90%] flex md:mx-auto mx-5 items-stretch lg:gap-5 gap-2 justify-center flex-wrap">
-                        {/* {currentDestination.map((destination, index) => (
+                        {currentDestination.map((destination, index) => (
                             <CardDestination key={index} {...destination} />
-                        ))} */}
+                        ))}
                     </div>
                 </div>
 
@@ -219,7 +220,10 @@ export default function Welcome(props) {
                 </div>
 
                 {/* Our Services */}
-                <div className="relative grid md:grid-cols-2 grid-rows-4 md:grid-rows-1 h-fit md:mt-16 mt-40 mx-0">
+                <div
+                    id="services"
+                    className="relative grid md:grid-cols-2 grid-rows-4 md:grid-rows-1 h-fit md:mt-16 mt-40 mx-0"
+                >
                     <motion.div
                         initial={{ opacity: 0, x: -200 }}
                         whileInView={{
@@ -311,6 +315,9 @@ export default function Welcome(props) {
                         </div>
                     </motion.div>
                 </div>
+
+                {/* Footer */}
+                <Footer />
             </div>
         </div>
     );
