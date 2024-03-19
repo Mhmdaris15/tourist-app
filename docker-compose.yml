@@ -15,7 +15,8 @@ services:
         volumes:
             - .:/var/www
         ports:
-            - "8000:8000"
+            - "${APP_PORT}:8000" 
+            - "8001:80"
         depends_on:
             - database
     database:
@@ -29,7 +30,6 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         volumes:
-            - ./db-data:/var/lib/mysql
-
+            - ./docker/mysql:/var/lib/mysql
 volumes:
     db-data: {}
