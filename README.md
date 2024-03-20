@@ -16,8 +16,8 @@ Our Travel Agency Web App is designed to provide users with a seamless experienc
 #### Installation <a name="installation"></a>
 To install the Travel Agency Web App, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your_username/travel-agency-app.git`
-2. Navigate to the project directory: `cd travel-agency-app`
+1. Clone the repository: `git clone https://github.com/Mhmdaris15/tourist-app.git`
+2. Navigate to the project directory: `cd tourist-app`
 3. Install PHP dependencies: `composer install`
 4. Install JavaScript dependencies: `npm install`
 5. Create a `.env` file by copying `.env.example` and configure your environment variables.
